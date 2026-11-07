@@ -34,7 +34,14 @@ The first 60-second synthetic English smoke check completed through the WASM ret
 
 ## Stack
 
-React · TypeScript · Vite · Transformers.js · ONNX Runtime Web · IndexedDB
+<p>
+  <img src="docs/assets/stack-icons/react.svg" width="20" height="20" alt="" /> React&nbsp;&nbsp;
+  <img src="docs/assets/stack-icons/typescript.svg" width="20" height="20" alt="" /> TypeScript&nbsp;&nbsp;
+  <img src="docs/assets/stack-icons/vite.svg" width="20" height="20" alt="" /> Vite&nbsp;&nbsp;
+  <img src="docs/assets/stack-icons/transformers.svg" width="20" height="20" alt="" /> Transformers.js&nbsp;&nbsp;
+  <img src="docs/assets/stack-icons/onnx.svg" width="20" height="20" alt="" /> ONNX Runtime Web&nbsp;&nbsp;
+  <img src="docs/assets/stack-icons/indexeddb.svg" width="20" height="20" alt="" /> IndexedDB
+</p>
 
 ## Credits and licensing
 
