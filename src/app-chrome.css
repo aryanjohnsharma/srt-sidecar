@@ -1,5 +1,5 @@
 :root{color-scheme:light}
-.loading-splash{position:fixed;inset:0;z-index:1000;display:grid;place-items:center;overflow:hidden;background:#f8f8f6;opacity:1;transition:opacity 220ms ease-out}
+.loading-splash{position:fixed;inset:0;z-index:1000;display:grid;place-items:center;overflow:hidden;background:#e2e2e5;opacity:1;transition:opacity 220ms ease-out}
 .loading-splash-leaving{opacity:0;pointer-events:none}
 .app-shell{position:relative;isolation:isolate}
 .app-shell.has-floating-export{padding-bottom:100px}

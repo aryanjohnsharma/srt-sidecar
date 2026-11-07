@@ -39,7 +39,7 @@ function Root() {
         logo="/logo.svg"
         ending="logo"
         theme="light"
-        style={{ height: 480, width: 'min(100vw, 720px)', margin: 'auto' }}
+        style={{ height: '100dvh', width: '100vw', margin: 'auto' }}
         aria-label="SRT Sidecar"
       />
     </div>}
