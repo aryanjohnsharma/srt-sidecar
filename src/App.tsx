@@ -72,7 +72,7 @@ function App({ onReady }: { onReady?: () => void }) {
     if (!viewDocument.startViewTransition) {
       document.documentElement.classList.add('theme-switching')
       setTheme(nextTheme)
-      window.setTimeout(() => document.documentElement.classList.remove('theme-switching'), 200)
+      window.setTimeout(() => document.documentElement.classList.remove('theme-switching'), 600)
       return
     }
     document.documentElement.style.setProperty('--theme-switch-x', `${event.clientX}px`)
