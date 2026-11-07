@@ -109,8 +109,8 @@
   min-height: 44px;
   padding: 11px 17px !important;
   gap: 9px;
-  color: #11181c !important;
-  -webkit-text-fill-color: #11181c;
+  color: #000 !important;
+  -webkit-text-fill-color: #000 !important;
   font-size: 13px !important;
   font-weight: 700 !important;
   white-space: nowrap;
@@ -118,7 +118,10 @@
 
 .footer-book-button:disabled {
   cursor: default;
-  opacity: 1;
+  opacity: 1 !important;
+  filter: none !important;
+  color: #000 !important;
+  -webkit-text-fill-color: #000 !important;
 }
 
 @media (max-width: 650px) {
