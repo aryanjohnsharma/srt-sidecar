@@ -20,7 +20,7 @@ const demoWords: Word[] = [
   ['Make', 5.91, 6.26], ['something', 6.26, 6.8], ['today.', 6.8, 7.22],
 ].map(([text, start, end], i) => ({ id: `demo-${i}`, text: String(text), start: Number(start), end: Number(end) }))
 const marqueeItems = [
-  { text: 'ONE WORD AT A TIME', Icon: AudioLines },
+  { text: 'CUSTOM WORDS PER CUE', Icon: AudioLines },
   { text: 'TIMED TO YOUR AUDIO', Icon: Sparkles },
   { text: 'EDIT EVERY WORD', Icon: FileText },
   { text: 'PRIVATE ON YOUR DEVICE', Icon: LockKeyhole },
