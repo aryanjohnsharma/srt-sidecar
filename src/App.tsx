@@ -1,11 +1,11 @@
 import { useCallback, useEffect, useMemo, useRef, useState, type DragEvent, type MouseEvent } from 'react'
+import { getCalApi } from '@calcom/embed-react'
 import { AudioLines, ArrowDownToLine, ArrowLeft, Check, ChevronDown, CircleHelp, FileAudio2, FileText, Gauge, Headphones, LockKeyhole, Pause, Play, Plus, RotateCcw, Settings2, ShieldCheck, Sparkles, Upload, Volume2, X } from './components/pika-ui-icons'
 import Dither from './components/Dither'
 import { MoonIcon, SquareInstagramIcon, SunsamaIcon, XTwitterIcon } from './components/brand-icons'
 import { buildCues, formatTimestamp, serializeSrt, validateCues, type Settings, type Word } from './lib/srt'
 import { clearProjects, deleteProject, listProjects, saveProject, type SavedProject } from './lib/projects'
 import { MetalButton } from './components/metal-button'
-import { BookUsingAssistantButton } from './components/book-using-assistant-button'
 import './project-ui.css'
 import './metal-button.css'
 import './motion.css'
@@ -100,6 +100,14 @@ function App({ onReady }: { onReady?: () => void }) {
   useEffect(() => () => { if (audioUrl) URL.revokeObjectURL(audioUrl) }, [audioUrl])
   useEffect(() => () => workerRef.current?.terminate(), [])
   useEffect(() => { projectsRef.current = projects }, [projects])
+  useEffect(() => {
+    let cancelled = false
+    void (async () => {
+      const cal = await getCalApi({ namespace: 'srt-sidecar-chat' })
+      if (!cancelled) cal('ui', { hideEventTypeDetails: false, layout: 'month_view' })
+    })()
+    return () => { cancelled = true }
+  }, [])
   useEffect(() => {
     document.documentElement.dataset.theme = theme
     document.documentElement.style.colorScheme = theme
@@ -484,7 +492,7 @@ function App({ onReady }: { onReady?: () => void }) {
         <div className="footer-actions">
           <a className="footer-social" href="https://x.com/aryanjohnsharma" target="_blank" rel="noreferrer noopener" aria-label="Follow Aryan on X"><span className="footer-social-mark" aria-hidden="true"><XTwitterIcon /></span></a>
           <a className="footer-social" href="https://www.instagram.com/aryanjohnsharma/" target="_blank" rel="noreferrer noopener" aria-label="Follow Aryan on Instagram"><span className="footer-social-mark" aria-hidden="true"><SquareInstagramIcon /></span></a>
-          <BookUsingAssistantButton theme={theme} />
+          <MetalButton variant="steel" wrapperClassName="footer-book-wrap" className="metal-button-cta footer-book-button" type="button" data-cal-namespace="srt-sidecar-chat" data-cal-link="aryan-sharma-amw1me/srt-sidecar-chat" data-cal-config='{"layout":"month_view","useSlotsViewOnSmallScreen":"true"}' aria-label="Book a 15 minute SRT Sidecar chat"><Gauge size={13} /> Book a call</MetalButton>
         </div>
       </footer>
     </div>
