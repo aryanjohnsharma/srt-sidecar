@@ -10,7 +10,7 @@
 .app-shell{position:relative;isolation:isolate}
 .app-shell.has-floating-export{padding-bottom:100px}
 @media(min-width:1024px){.app-shell{width:90.9091%;min-height:90.9091vh;margin-inline:auto;zoom:1.1}}
-@media(min-width:1024px){.app-shell>.topbar{width:100%;margin-left:-4.54545vw;margin-right:0}}
+@media(min-width:1024px){.app-shell>.topbar{width:110%;margin-left:-4.54545vw;margin-right:0}}
 .ambient-layer{position:fixed;inset:0;z-index:0;overflow:hidden;pointer-events:none;opacity:.23}
 .ambient-layer>div{position:absolute!important;inset:0}
 .ambient-layer canvas{width:100%;height:100%}
