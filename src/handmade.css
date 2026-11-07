@@ -1,0 +1,151 @@
+/* Keep the product's explanation typographic and useful, not icon-card based. */
+.hero h1 {
+  margin-top: 8px;
+}
+
+.value-row {
+  max-width: 800px;
+  margin: 30px auto 0;
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  border: 0;
+  border-radius: 0;
+  background: transparent;
+}
+
+.value-item {
+  display: grid;
+  align-content: start;
+  gap: 7px;
+  padding: 13px 22px;
+  border: 0;
+  border-left: 1px solid #dfe3dc;
+}
+
+.value-item:first-child {
+  border-left: 0;
+}
+
+.value-item strong {
+  color: #436e62;
+  font: 600 9px var(--mono);
+  letter-spacing: 0.075em;
+}
+
+.value-item span {
+  color: #626b63;
+  font-size: 11px;
+  line-height: 1.5;
+}
+
+.topbar-actions {
+  display: flex;
+  align-items: center;
+  gap: 18px;
+}
+
+.topbar-author {
+  color: #68736b;
+  font-size: 10px;
+  letter-spacing: 0;
+  white-space: nowrap;
+  text-underline-offset: 3px;
+}
+
+.topbar-author:hover,
+.footer-credit a:hover {
+  color: var(--accent-dark);
+  text-decoration: underline;
+}
+
+.footer-credit {
+  white-space: nowrap;
+}
+
+.footer-credit a {
+  color: #52685c;
+  font-weight: 600;
+  letter-spacing: 0;
+  text-underline-offset: 3px;
+}
+
+.site-footer {
+  gap: 22px;
+}
+
+.footer-meta,
+.footer-actions {
+  display: flex;
+  align-items: center;
+}
+
+.footer-meta {
+  gap: 18px;
+}
+
+.footer-actions {
+  gap: 18px;
+}
+
+.footer-actions > a {
+  color: #52685c;
+  font-family: 'DM Sans', sans-serif;
+  font-size: 10px;
+  letter-spacing: 0;
+  text-underline-offset: 3px;
+}
+
+.footer-actions > a:hover {
+  color: var(--accent-dark);
+  text-decoration: underline;
+}
+
+.footer-book-wrap {
+  display: inline-flex;
+}
+
+.footer-book-button {
+  min-height: 34px;
+  padding: 7px 12px !important;
+  gap: 7px;
+  font-size: 9px !important;
+}
+
+.footer-book-button:disabled {
+  cursor: default;
+  opacity: 0.72;
+}
+
+@media (max-width: 650px) {
+  .value-row {
+    grid-template-columns: 1fr;
+    margin-top: 18px;
+  }
+
+  .value-item,
+  .value-item:first-child {
+    padding: 11px 3px;
+    border: 0;
+    border-top: 1px solid #dfe3dc;
+  }
+
+  .value-item:first-child {
+    border-top: 0;
+  }
+}
+
+@media (max-width: 620px) {
+  .topbar-author { display: none; }
+  .site-footer {
+    align-items: flex-start;
+    flex-direction: column;
+    gap: 13px;
+  }
+  .footer-meta,
+  .footer-actions {
+    width: 100%;
+    justify-content: space-between;
+  }
+  .footer-meta { gap: 8px; }
+  .footer-actions { gap: 14px; }
+}

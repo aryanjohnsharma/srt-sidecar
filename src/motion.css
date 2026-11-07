@@ -1,0 +1,166 @@
+/* Shared motion language: quick entrances, calm layout changes, short exits. */
+:root {
+  --motion-enter: 220ms;
+  --motion-control: 190ms;
+  --motion-exit: 176ms;
+  --motion-ease-out: cubic-bezier(0.16, 1, 0.3, 1);
+  --motion-ease-in-out: cubic-bezier(0.65, 0, 0.35, 1);
+}
+
+.workspace,
+.settings-panel,
+.audio-card,
+.transcript-card,
+.cue-list,
+.cue-row,
+.success-note,
+.error-note,
+.validation-note,
+.recent-projects {
+  animation: motion-enter var(--motion-enter) var(--motion-ease-out) both;
+}
+
+.dropzone,
+.select-wrap select,
+.number-stepper,
+.timing-editor input,
+.toggle-ui,
+.cue-row,
+.recent-project,
+.wave-progress,
+.play-button,
+.advanced-toggle,
+.small-tool {
+  transition-duration: var(--motion-control);
+  transition-timing-function: var(--motion-ease-in-out);
+}
+
+.cue-row,
+.play-button,
+.small-tool,
+.recent-action {
+  transition-property: transform, background-color, color, border-color, box-shadow;
+  transition-timing-function: cubic-bezier(0.2, 1.2, 0.4, 1);
+}
+
+.cue-row:active,
+.play-button:active,
+.small-tool:active,
+.recent-action:active {
+  transform: scale(0.97);
+  transition-duration: 0ms;
+}
+
+.select-wrap select {
+  transition: color var(--motion-control) var(--motion-ease-in-out),
+    background-color var(--motion-control) var(--motion-ease-in-out);
+}
+
+.cue-row {
+  transition-property: background-color, color, border-color, transform, box-shadow;
+}
+
+.cue-row:nth-child(1) { animation-delay: 0ms; }
+.cue-row:nth-child(2) { animation-delay: 30ms; }
+.cue-row:nth-child(3) { animation-delay: 60ms; }
+.cue-row:nth-child(4) { animation-delay: 90ms; }
+.cue-row:nth-child(5) { animation-delay: 120ms; }
+.cue-row:nth-child(6) { animation-delay: 150ms; }
+.cue-row:nth-child(7) { animation-delay: 180ms; }
+
+.advanced-controls {
+  transform-origin: top center;
+  animation: popover-in 190ms var(--motion-ease-out) both;
+}
+
+.advanced-controls > * {
+  animation: detail-settle 180ms var(--motion-ease-out) both;
+}
+
+.advanced-controls > *:nth-child(1) { animation-delay: 30ms; }
+.advanced-controls > *:nth-child(2) { animation-delay: 60ms; }
+.advanced-controls > *:nth-child(3) { animation-delay: 90ms; }
+.advanced-controls > *:nth-child(4) { animation-delay: 120ms; }
+.advanced-controls > *:nth-child(5) { animation-delay: 150ms; }
+
+.toggle-label input:checked + .toggle-ui::after {
+  transform: translateX(13px) scaleX(1.12);
+}
+
+.success-note {
+  animation: success-pulse 420ms var(--motion-ease-out) both;
+}
+
+.progress-track > span {
+  transition: width 300ms var(--motion-ease-in-out);
+  background-image: linear-gradient(90deg, #238679, #4aa88e);
+  -webkit-mask-image: linear-gradient(90deg, #000 0%, #000 92%, transparent 100%);
+  mask-image: linear-gradient(90deg, #000 0%, #000 92%, transparent 100%);
+}
+
+.workspace,
+.loading-workspace,
+.editor-main {
+  view-transition-name: work-surface;
+}
+
+::view-transition-old(root),
+::view-transition-old(work-surface) {
+  animation-duration: var(--motion-exit);
+  animation-timing-function: var(--motion-ease-in-out);
+}
+
+::view-transition-new(root),
+::view-transition-new(work-surface) {
+  animation-duration: var(--motion-enter);
+  animation-timing-function: var(--motion-ease-out);
+}
+
+.cue-play,
+.play-button svg {
+  transition: opacity 150ms ease-out, filter 150ms ease-out, transform 190ms var(--motion-ease-out);
+}
+
+.icon-swap {
+  display: inline-flex;
+  animation: icon-crossfade 180ms var(--motion-ease-out) both;
+}
+
+.cue-row:not(.cue-active) .cue-play { opacity: 0.6; filter: blur(0.35px); }
+.cue-row.cue-active .cue-play { opacity: 1; filter: blur(0); transform: scale(1.06); }
+
+@keyframes motion-enter {
+  0% { opacity: 0; transform: translateY(8px) rotate(-0.35deg); }
+  72% { opacity: 1; transform: translateY(-1px) rotate(0.06deg); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes popover-in {
+  from { opacity: 0; transform: scale(0.95) translateY(-3px); }
+  to { opacity: 1; transform: scale(1) translateY(0); }
+}
+
+@keyframes detail-settle {
+  from { opacity: 0; transform: translateY(-4px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes success-pulse {
+  0% { opacity: 0; transform: scale(0.97); }
+  68% { opacity: 1; transform: scale(1.02); }
+  100% { opacity: 1; transform: scale(1); }
+}
+
+@keyframes icon-crossfade {
+  from { opacity: 0; filter: blur(2px); transform: scale(0.9); }
+  to { opacity: 1; filter: blur(0); transform: scale(1); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-delay: 0ms !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}

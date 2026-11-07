@@ -1,0 +1,52 @@
+.metal-button-full {
+  display: flex;
+  width: 100%;
+}
+
+.metal-button-floating {
+  display: flex;
+  width: 148px;
+  flex: 0 0 auto;
+}
+
+.metal-button-cta {
+  width: 100%;
+  min-height: 42px;
+  height: auto !important;
+  padding: 10px 16px !important;
+  gap: 9px;
+  font-size: 12px !important;
+  font-weight: 700 !important;
+  line-height: 1.2 !important;
+  text-shadow: none !important;
+  white-space: nowrap;
+}
+
+.metal-button-cta svg {
+  width: 15px;
+  height: 15px;
+  flex: 0 0 auto;
+}
+
+.metal-button-cta:disabled {
+  cursor: not-allowed;
+  opacity: 0.48;
+}
+
+.metal-button-cta:focus-visible {
+  outline: 3px solid #58a99b !important;
+  outline-offset: 4px;
+}
+
+.metal-button-floating .metal-button-cta {
+  min-height: 40px;
+  padding: 9px 12px !important;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .metal-button,
+  .metal-button * {
+    animation-duration: 0.01ms !important;
+    transition-duration: 0.01ms !important;
+  }
+}
