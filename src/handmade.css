@@ -144,6 +144,7 @@
 .footer-book-wrap {
   display: inline-flex;
   flex: 0 0 auto;
+  margin-left: auto;
 }
 
 .footer-book-button {
@@ -197,5 +198,5 @@
     justify-content: space-between;
   }
   .footer-meta { gap: 8px; }
-  .footer-actions { gap: 14px; }
+  .footer-actions { gap: 14px; justify-content: flex-start; }
 }
