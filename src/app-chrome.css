@@ -9,6 +9,7 @@
 @keyframes theme-color-splash{from{clip-path:circle(0 at var(--theme-switch-x,50vw) var(--theme-switch-y,50vh));filter:blur(6px)}to{clip-path:circle(150vmax at var(--theme-switch-x,50vw) var(--theme-switch-y,50vh));filter:blur(0)}}
 .app-shell{position:relative;isolation:isolate}
 .app-shell.has-floating-export{padding-bottom:100px}
+@media(min-width:1024px){.app-shell{width:90.9091%;min-height:90.9091vh;margin-inline:auto;zoom:1.1}}
 .ambient-layer{position:fixed;inset:0;z-index:0;overflow:hidden;pointer-events:none;opacity:.23}
 .ambient-layer>div{position:absolute!important;inset:0}
 .ambient-layer canvas{width:100%;height:100%}
