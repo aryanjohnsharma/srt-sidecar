@@ -4,10 +4,64 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta name="theme-color" content="#f8f8f6" />
-    <meta name="description" content="Turn local audio into editable, word-timed subtitles. Free, private, and ready for your video editor." />
+    <meta name="description" content="Create editable, word-timed SRT subtitles from audio with SRT Sidecar. Transcribe in your browser, refine every cue, and export subtitles for your video editor." />
+    <meta name="robots" content="index, follow, max-image-preview:large" />
+    <link rel="canonical" href="https://srtsidecar.vercel.app/" />
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="SRT Sidecar" />
+    <meta property="og:title" content="SRT Sidecar | Word-timed subtitles from audio" />
+    <meta property="og:description" content="Transcribe local audio, edit word-level subtitle timing, and export an SRT ready for your video editor." />
+    <meta property="og:url" content="https://srtsidecar.vercel.app/" />
+    <meta property="og:image" content="https://srtsidecar.vercel.app/pwa-icon-512.png" />
+    <meta name="twitter:card" content="summary" />
+    <meta name="twitter:title" content="SRT Sidecar | Word-timed subtitles from audio" />
+    <meta name="twitter:description" content="Transcribe local audio, edit word-level subtitle timing, and export an SRT ready for your video editor." />
+    <meta name="twitter:image" content="https://srtsidecar.vercel.app/pwa-icon-512.png" />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <link rel="manifest" href="/manifest.webmanifest" />
-    <title>SRT Sidecar — subtitles on your terms</title>
+    <title>SRT Sidecar | Local AI Word-Timed Subtitle Generator</title>
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@graph": [
+          {
+            "@type": "WebSite",
+            "@id": "https://srtsidecar.vercel.app/#website",
+            "url": "https://srtsidecar.vercel.app/",
+            "name": "SRT Sidecar",
+            "description": "A browser-based tool for creating editable, word-timed SRT subtitles from audio.",
+            "inLanguage": "en"
+          },
+          {
+            "@type": "WebApplication",
+            "@id": "https://srtsidecar.vercel.app/#application",
+            "name": "SRT Sidecar",
+            "url": "https://srtsidecar.vercel.app/",
+            "applicationCategory": "MultimediaApplication",
+            "operatingSystem": "Any",
+            "browserRequirements": "A modern browser with JavaScript and WebAssembly support.",
+            "description": "Transcribe audio in the browser, edit word-level subtitle text and timing, then export an SRT file. Audio stays on the user's device.",
+            "isAccessibleForFree": true,
+            "featureList": [
+              "Browser-based audio transcription",
+              "Editable word-level subtitle cues",
+              "SRT validation and export",
+              "Local project history"
+            ],
+            "creator": {
+              "@type": "Person",
+              "name": "Aryan John Sharma",
+              "url": "https://aryanjohnsharma.github.io/",
+              "sameAs": [
+                "https://github.com/aryanjohnsharma/srt-sidecar",
+                "https://x.com/aryanjohnsharma",
+                "https://www.instagram.com/aryanjohnsharma/"
+              ]
+            }
+          }
+        ]
+      }
+    </script>
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet" />
@@ -19,6 +73,18 @@
   </head>
   <body style="margin:0">
     <div id="root"><div class="boot-splash" aria-hidden="true"><img src="/logo.svg" alt="" /></div></div>
+    <noscript>
+      <style>.boot-splash{display:none}.seo-fallback{max-width:760px;margin:12vh auto;padding:24px;color:#262925;font:16px/1.65 Arial,sans-serif}.seo-fallback h1{font-size:clamp(2.4rem,8vw,4rem);line-height:1.05;letter-spacing:-.05em}.seo-fallback h2{margin-top:2.5rem;font-size:1.2rem}.seo-fallback a{color:#0c6159}</style>
+      <main class="seo-fallback">
+        <h1>SRT Sidecar: word-timed subtitles from audio</h1>
+        <p>SRT Sidecar is a browser-based subtitle generator and editor. Transcribe an audio track on your device, review and correct word-level text and timing, group words into subtitle cues, then export an SRT for your video editor.</p>
+        <h2>How it works</h2>
+        <ol><li>Choose a WAV, MP3, M4A, AAC, or other supported audio file.</li><li>Generate a transcript with Whisper running locally in the browser.</li><li>Edit transcript words and cue timing, then export a validated SRT file.</li></ol>
+        <h2>Privacy</h2>
+        <p>Audio is decoded and transcribed on the user's device. SRT Sidecar does not upload audio or transcript text to its own server. The browser downloads the speech model from Hugging Face the first time transcription runs.</p>
+        <p>Learn more in the <a href="https://github.com/aryanjohnsharma/srt-sidecar">SRT Sidecar source repository</a>.</p>
+      </main>
+    </noscript>
     <script type="module" src="/src/main.tsx"></script>
   </body>
 </html>

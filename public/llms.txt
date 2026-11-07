@@ -1,0 +1,33 @@
+# SRT Sidecar
+
+> SRT Sidecar turns audio into editable, word-timed SRT subtitles in the browser.
+
+Canonical website: https://srtsidecar.vercel.app/
+Source repository: https://github.com/aryanjohnsharma/srt-sidecar
+Project creator: Aryan John Sharma (https://aryanjohnsharma.github.io/)
+
+## Product
+
+SRT Sidecar is a browser-based subtitle generator and editor for video creators. A user selects an audio track, generates a transcript with Whisper Base Timestamped through Transformers.js, corrects transcript words and timing, groups words into subtitle cues, validates cue timings, and downloads a UTF-8 SRT file.
+
+## Privacy and runtime
+
+Audio decoding and transcription run on the user's device. Audio and transcript text are not uploaded to an SRT Sidecar server. The browser fetches model and inference runtime assets when transcription is first used. Recent project text and settings are stored in browser IndexedDB; source audio is not saved.
+
+## Supported workflow
+
+- Select local audio such as WAV, MP3, M4A, or AAC.
+- Transcribe in a browser worker with WebGPU and a WASM fallback.
+- Edit word text and timing, configure cue grouping, and export SRT.
+- Reopen local project history and reconnect the audio file to resume playback.
+
+## Important limitations
+
+Transcription timing and text are model estimates and should be reviewed before use. A synthetic English smoke check is documented in the repository; it is not a representative accuracy benchmark. Model quality across real recordings, speakers, languages, browsers, and devices has not been comprehensively benchmarked.
+
+## References
+
+- Product source and issue tracking: https://github.com/aryanjohnsharma/srt-sidecar
+- Validation notes: https://github.com/aryanjohnsharma/srt-sidecar/blob/main/docs/VALIDATION.md
+- Whisper model: https://huggingface.co/onnx-community/whisper-base_timestamped
+- Creator website: https://aryanjohnsharma.github.io/

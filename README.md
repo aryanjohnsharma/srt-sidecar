@@ -32,23 +32,6 @@ The app uses [`onnx-community/whisper-base_timestamped`](https://huggingface.co/
 
 The first 60-second synthetic English smoke check completed through the WASM retry and produced 123 timed words with valid SRT cues. It is a pipeline check, not a quality benchmark. Accuracy across real recordings, speakers, languages, browsers, and devices still needs broader evaluation. [See validation notes](docs/VALIDATION.md).
 
-## Privacy and offline use
-
-Audio decoding and transcription run in the browser. Audio and transcript text are not sent to an SRT Sidecar server. The browser does fetch model assets from Hugging Face. The service worker caches the app shell; offline transcription also requires the model and inference runtime to be cached.
-
-See [PRIVACY.md](PRIVACY.md) for details.
-
-## Deploy
-
-The app is a static Vite site. For Vercel, use:
-
-| Setting | Value |
-| --- | --- |
-| Build command | `npm run build` |
-| Output directory | `dist` |
-
-The core workflow needs no server functions or environment variables.
-
 ## Stack
 
 React · TypeScript · Vite · Transformers.js · ONNX Runtime Web · IndexedDB
