@@ -52,6 +52,7 @@ function App({ onReady }: { onReady?: () => void }) {
   const [installPrompt, setInstallPrompt] = useState<InstallPrompt | null>(null)
   const [modelCacheStatus, setModelCacheStatus] = useState('Checking')
   const [online, setOnline] = useState(navigator.onLine)
+  const [theme, setTheme] = useState<'light' | 'dark'>(() => window.localStorage.getItem('srt-sidecar-theme') === 'dark' ? 'dark' : 'light')
   const audioRef = useRef<HTMLAudioElement>(null)
   const workerRef = useRef<Worker | null>(null)
   const jobSequenceRef = useRef(0)
@@ -73,6 +74,11 @@ function App({ onReady }: { onReady?: () => void }) {
   useEffect(() => () => { if (audioUrl) URL.revokeObjectURL(audioUrl) }, [audioUrl])
   useEffect(() => () => workerRef.current?.terminate(), [])
   useEffect(() => { projectsRef.current = projects }, [projects])
+  useEffect(() => {
+    document.documentElement.dataset.theme = theme
+    document.documentElement.style.colorScheme = theme
+    window.localStorage.setItem('srt-sidecar-theme', theme)
+  }, [theme])
   useEffect(() => { onReady?.() }, [onReady])
   useEffect(() => {
     const query = window.matchMedia('(prefers-reduced-motion: reduce)')
@@ -360,7 +366,7 @@ function App({ onReady }: { onReady?: () => void }) {
   const onDrop = useCallback((event: DragEvent) => { event.preventDefault(); setDragging(false); acceptFile(event.dataTransfer.files[0]) }, [])
 
   return (
-    <div className={`app-shell${phase === 'review' ? ' has-floating-export' : ''}`}>
+    <div className={`app-shell${phase === 'review' ? ' has-floating-export' : ''}`} data-theme={theme}>
       <div className="ambient-layer" aria-hidden="true"><Dither waveSpeed={0.08} waveFrequency={1.6} waveAmplitude={0.18} waveColor={[0.76, 0.83, 0.8]} backgroundColor="transparent" colorNum={3} pixelSize={3} disableAnimation={reducedMotion} enableMouseInteraction={false} ditherMode="bayer4" scale={1.1} contrast={0.8} brightness={0.02} mouseEffect="ripple" mouseStrength={0.3} trail={0.25} clickRipple={false} /></div>
       <header className="topbar">
         <a href="#home" className="brand" aria-label="SRT Sidecar home" onClick={(event) => { event.preventDefault(); transitionPhase('upload'); setWords([]); setFile(null) }}>
@@ -370,6 +376,7 @@ function App({ onReady }: { onReady?: () => void }) {
         <div className="topbar-center"><span className="privacy-dot" /> PRIVATE BY DESIGN <span className="topbar-separator">·</span> {online ? 'READY TO WORK' : 'OFFLINE'}</div>
         <div className="topbar-actions">
           <a className="topbar-author" href="https://aryanjohnsharma.github.io/" target="_blank" rel="noreferrer noopener">by @aryanjohnsharma</a>
+          <button className="topbar-theme" type="button" aria-label={`Switch to ${theme === 'light' ? 'dark' : 'light'} theme`} aria-pressed={theme === 'dark'} onClick={() => setTheme(theme === 'light' ? 'dark' : 'light')}><span aria-hidden="true">{theme === 'light' ? '◐' : '☼'}</span><span>{theme === 'light' ? 'Dark' : 'Light'}</span></button>
           {installPrompt ? <button className="topbar-link install-link" onClick={() => void installApp()}>Install app <ArrowDownToLine size={14} /></button> : <a className="topbar-link" href="#how-it-works" onClick={(e) => { e.preventDefault(); document.getElementById('how-it-works')?.scrollIntoView({ behavior: 'smooth' }) }}><CircleHelp size={15} /> How it works</a>}
         </div>
       </header>
