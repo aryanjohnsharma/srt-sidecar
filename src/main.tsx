@@ -4,6 +4,9 @@ import { LiquidGlassLogo } from './components/liquid-glass-logo'
 import './styles.css'
 import './app-chrome.css'
 
+const motionOverride = window.localStorage.getItem('srt-sidecar-motion') === 'on'
+document.documentElement.dataset.motion = window.matchMedia('(prefers-reduced-motion: reduce)').matches && !motionOverride ? 'reduced' : 'full'
+
 if ('serviceWorker' in navigator && import.meta.env.PROD) {
   window.addEventListener('load', () => { void navigator.serviceWorker.register('/service-worker.js') })
 }

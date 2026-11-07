@@ -42,7 +42,8 @@ function App({ onReady }: { onReady?: () => void }) {
   const [selectedCueIndex, setSelectedCueIndex] = useState(0)
   const [dragging, setDragging] = useState(false)
   const [exported, setExported] = useState(false)
-  const [reducedMotion, setReducedMotion] = useState(false)
+  const [systemPrefersReducedMotion, setSystemPrefersReducedMotion] = useState(() => window.matchMedia('(prefers-reduced-motion: reduce)').matches)
+  const [motionEnabled, setMotionEnabled] = useState(() => window.localStorage.getItem('srt-sidecar-motion') === 'on')
   const [projects, setProjects] = useState<SavedProject[]>([])
   const [currentProjectId, setCurrentProjectId] = useState('')
   const [projectName, setProjectName] = useState('')
@@ -61,6 +62,7 @@ function App({ onReady }: { onReady?: () => void }) {
   const cues = useMemo(() => buildCues(words, settings), [words, settings])
   const cueIssues = useMemo(() => validateCues(cues, settings), [cues, settings])
   const audioUrl = useMemo(() => file ? URL.createObjectURL(file) : '', [file])
+  const reducedMotion = systemPrefersReducedMotion && !motionEnabled
 
   const switchTheme = (event: MouseEvent<HTMLButtonElement>) => {
     const nextTheme = theme === 'light' ? 'dark' : 'light'
@@ -104,11 +106,16 @@ function App({ onReady }: { onReady?: () => void }) {
     document.documentElement.style.colorScheme = theme
     window.localStorage.setItem('srt-sidecar-theme', theme)
   }, [theme])
+  useEffect(() => {
+    document.documentElement.dataset.motion = reducedMotion ? 'reduced' : 'full'
+    if (motionEnabled) window.localStorage.setItem('srt-sidecar-motion', 'on')
+    else window.localStorage.removeItem('srt-sidecar-motion')
+    window.dispatchEvent(new Event('sidecar-motion-change'))
+  }, [motionEnabled, reducedMotion])
   useEffect(() => { onReady?.() }, [onReady])
   useEffect(() => {
     const query = window.matchMedia('(prefers-reduced-motion: reduce)')
-    const update = () => setReducedMotion(query.matches)
-    update()
+    const update = () => setSystemPrefersReducedMotion(query.matches)
     query.addEventListener('change', update)
     return () => query.removeEventListener('change', update)
   }, [])
@@ -411,6 +418,7 @@ function App({ onReady }: { onReady?: () => void }) {
           <section className="hero">
             <h1>Your edit is done.<br /><span>Let’s give it a voice.</span></h1>
             <p className="hero-copy">Turn your audio into word-timed subtitles, right here on your device.<br className="desktop-break" /> Ready for whichever editor comes next.</p>
+            {systemPrefersReducedMotion && <div className="motion-notice" role="status"><span>{motionEnabled ? 'Motion is enabled for this site.' : 'Animations are paused by your device.'}</span><button type="button" onClick={() => setMotionEnabled((enabled) => !enabled)}>{motionEnabled ? 'Use device setting' : 'Enable motion'}</button></div>}
           </section>
           <section className="workspace upload-workspace" aria-label="Start a subtitle project">
             <div className="workspace-heading"><div><div className="section-kicker">01 <span>·</span> START WITH AUDIO</div><h2>Bring your audio</h2><p>Choose a voice track from your finished edit.</p></div><span className="step-pill">STEP 1 OF 3</span></div>

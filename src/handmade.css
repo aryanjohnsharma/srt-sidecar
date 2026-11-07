@@ -3,6 +3,27 @@
   margin-top: 8px;
 }
 
+.motion-notice {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  margin: 10px auto 0;
+  color: #777f78;
+  font-size: 10px;
+}
+
+.motion-notice button {
+  padding: 2px 0;
+  border: 0;
+  background: transparent;
+  color: #356e60;
+  font-size: inherit;
+  font-weight: 600;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
 .value-row {
   max-width: 800px;
   margin: 30px auto 0;
@@ -200,3 +221,6 @@
   .footer-meta { gap: 8px; }
   .footer-actions { gap: 14px; justify-content: flex-start; }
 }
+
+.app-shell[data-theme="dark"] .motion-notice{color:#b4bcb5}
+.app-shell[data-theme="dark"] .motion-notice button{color:#a4d0c1}

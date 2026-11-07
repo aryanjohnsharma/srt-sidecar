@@ -126,9 +126,10 @@ export const LiquidGlassLogo = forwardRef<LiquidGlassLogoHandle, LiquidGlassLogo
     section.current = { start: backgroundVideoStart, end: backgroundVideoEnd };
     // A full-length video loops by itself; a section is looped by the watcher below.
     const sectioned = backgroundVideoStart > 0 || backgroundVideoEnd !== undefined;
+    const isMotionReduced = () => Boolean(window.matchMedia?.('(prefers-reduced-motion: reduce)').matches && document.documentElement.dataset.motion !== 'full');
     const playVideo = () => {
       const media = video.current;
-      if (!media || window.matchMedia?.('(prefers-reduced-motion: reduce)').matches) return;
+      if (!media || isMotionReduced()) return;
       void media.play().catch(() => {});
     };
     const seekVideo = (seconds: number) => {
@@ -166,10 +167,14 @@ export const LiquidGlassLogo = forwardRef<LiquidGlassLogoHandle, LiquidGlassLogo
       const media = video.current;
       if (!media) return;
       const reduced = window.matchMedia?.('(prefers-reduced-motion: reduce)');
-      const sync = () => (tuning.paused || reduced?.matches ? media.pause() : playVideo());
+      const sync = () => (tuning.paused || isMotionReduced() ? media.pause() : playVideo());
       sync();
       reduced?.addEventListener?.('change', sync);
-      return () => reduced?.removeEventListener?.('change', sync);
+      window.addEventListener('sidecar-motion-change', sync);
+      return () => {
+        reduced?.removeEventListener?.('change', sync);
+        window.removeEventListener('sidecar-motion-change', sync);
+      };
       // playVideo only reads refs.
       // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [tuning.paused, backgroundVideo]);

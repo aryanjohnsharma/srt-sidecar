@@ -44,8 +44,8 @@
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .metal-button,
-  .metal-button * {
+  html:not([data-motion="full"]) .metal-button,
+  html:not([data-motion="full"]) .metal-button * {
     animation-duration: 0.01ms !important;
     transition-duration: 0.01ms !important;
   }

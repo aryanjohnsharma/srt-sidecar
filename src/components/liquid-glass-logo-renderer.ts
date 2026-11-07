@@ -626,6 +626,7 @@ export function createLiquidGlassLogoRenderer(
   let visible = true;
   let frame = 0;
   const reduced = window.matchMedia?.('(prefers-reduced-motion: reduce)');
+  let reduce = Boolean(reduced?.matches && document.documentElement.dataset.motion !== 'full');
 
   const fit = () =>
     Math.min(
@@ -637,7 +638,7 @@ export function createLiquidGlassLogoRenderer(
   const draw = () => {
     if (!loaded || disposed) return;
     // While the delay runs nothing shows yet, only what is behind the canvas.
-    if (!reduced?.matches && clock < tuning.delay * tuning.speed) {
+    if (!reduce && clock < tuning.delay * tuning.speed) {
       gl.bindFramebuffer(gl.FRAMEBUFFER, null);
       gl.viewport(0, 0, canvas.width, canvas.height);
       gl.clearColor(0, 0, 0, 0);
@@ -665,7 +666,7 @@ export function createLiquidGlassLogoRenderer(
     gl.uniform2f(uniform('uTextBox'), textBox[0] * scale, textBox[1] * scale);
     gl.uniform1f(uniform('uTextWidth'), textWidth * scale);
     const finishTime = tuning.ending === 'logo' ? logoFinishTime : liquidGlassLogoDuration;
-    const sequenceTime = reduced?.matches
+    const sequenceTime = reduce
       ? finishTime
       : Math.max(0, clock - tuning.delay * tuning.speed);
     const displayTime =
@@ -809,7 +810,7 @@ export function createLiquidGlassLogoRenderer(
     frame = 0;
     const delta = last ? Math.min(0.05, (now - last) / 1000) : 0;
     last = now;
-    const moving = playing && visible && !reduced?.matches && loaded;
+    const moving = playing && visible && !reduce && loaded;
     if (moving) {
       clock += delta * tuning.speed;
       const cycle =
@@ -855,10 +856,12 @@ export function createLiquidGlassLogoRenderer(
   });
   visibility.observe(canvas);
   const onMotion = () => {
+    reduce = Boolean(reduced?.matches && document.documentElement.dataset.motion !== 'full');
     last = 0;
     request();
   };
   reduced?.addEventListener?.('change', onMotion);
+  window.addEventListener('sidecar-motion-change', onMotion);
   resize();
   void raster();
 
@@ -898,6 +901,7 @@ export function createLiquidGlassLogoRenderer(
       resizeObserver.disconnect();
       visibility.disconnect();
       reduced?.removeEventListener?.('change', onMotion);
+      window.removeEventListener('sidecar-motion-change', onMotion);
       gl.deleteTexture(logoTexture);
       gl.deleteTexture(textTexture);
       gl.deleteTexture(sceneTexture);

@@ -434,7 +434,8 @@ const Dither = ({
     const framebuffer = gl.createFramebuffer();
 
     const probe = document.createElement('canvas').getContext('2d', { willReadFrequently: true });
-    const reduce = window.matchMedia?.('(prefers-reduced-motion: reduce)').matches ?? false;
+    const motionQuery = window.matchMedia?.('(prefers-reduced-motion: reduce)');
+    let reduce = Boolean(motionQuery?.matches && document.documentElement.dataset.motion !== 'full');
     const cache = new Map<string, number[]>();
     const toColor = (value: DitherColor): number[] => {
       if (Array.isArray(value)) return [0, 1, 2].map(i => clamp(Number(value[i]) || 0, 0, 1));
@@ -616,6 +617,20 @@ const Dither = ({
       if (!raf && visible && !document.hidden) raf = requestAnimationFrame(frame);
     };
 
+    const syncMotionPreference = () => {
+      const next = Boolean(motionQuery?.matches && document.documentElement.dataset.motion !== 'full');
+      if (next === reduce) return;
+      reduce = next;
+      last = 0;
+      if (reduce) {
+        cancelAnimationFrame(raf);
+        raf = 0;
+        render();
+      } else wake();
+    };
+    motionQuery?.addEventListener('change', syncMotionPreference);
+    window.addEventListener('sidecar-motion-change', syncMotionPreference);
+
     const resize = () => {
       const s = settingsRef.current;
       const width = Math.max(1, container.clientWidth);
@@ -704,6 +719,8 @@ const Dither = ({
 
     return () => {
       cancelAnimationFrame(raf);
+      motionQuery?.removeEventListener('change', syncMotionPreference);
+      window.removeEventListener('sidecar-motion-change', syncMotionPreference);
       wakeRef.current = null;
       resizeObserver.disconnect();
       intersection.disconnect();
