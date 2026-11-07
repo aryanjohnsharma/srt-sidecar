@@ -147,12 +147,13 @@
 }
 
 .footer-book-button {
-  min-height: 44px;
-  padding: 11px 17px !important;
-  gap: 9px;
+  height: 28px !important;
+  min-height: 28px !important;
+  padding: 5px 11px !important;
+  gap: 7px;
   color: #000 !important;
   -webkit-text-fill-color: #000 !important;
-  font-size: 13px !important;
+  font-size: 11px !important;
   font-weight: 700 !important;
   white-space: nowrap;
 }

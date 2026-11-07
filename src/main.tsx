@@ -38,8 +38,8 @@ function Root() {
       <LiquidGlassLogo
         logo="/logo.svg"
         ending="logo"
-        theme="dark"
-        style={{ height: 480, width: 'min(100vw, 720px)' }}
+        theme="light"
+        style={{ height: 480, width: 'min(100vw, 720px)', margin: 'auto' }}
         aria-label="SRT Sidecar"
       />
     </div>}

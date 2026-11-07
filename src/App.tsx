@@ -367,7 +367,7 @@ function App({ onReady }: { onReady?: () => void }) {
 
   return (
     <div className={`app-shell${phase === 'review' ? ' has-floating-export' : ''}`} data-theme={theme}>
-      <div className="ambient-layer" aria-hidden="true"><Dither waveSpeed={0.14} waveFrequency={1.6} waveAmplitude={0.24} waveColor={[0.56, 0.64, 0.59]} backgroundColor="transparent" colorNum={3} pixelSize={3} disableAnimation={reducedMotion} enableMouseInteraction={false} ditherMode="bayer4" scale={1.1} contrast={0.8} brightness={0.02} mouseEffect="ripple" mouseStrength={0.3} trail={0.25} clickRipple={false} /></div>
+      <div className="ambient-layer" aria-hidden="true"><Dither waveSpeed={0.4} waveFrequency={1.6} waveAmplitude={0.3} waveColor={[0.56, 0.64, 0.59]} backgroundColor="transparent" colorNum={3} pixelSize={3} disableAnimation={reducedMotion} enableMouseInteraction={false} ditherMode="bayer4" scale={1.1} contrast={0.8} brightness={0.02} mouseEffect="ripple" mouseStrength={0.3} trail={0.25} clickRipple={false} /></div>
       <header className="topbar">
         <a href="#home" className="brand" aria-label="SRT Sidecar home" onClick={(event) => { event.preventDefault(); transitionPhase('upload'); setWords([]); setFile(null) }}>
           <span className="brand-mark"><AudioLines size={19} strokeWidth={2.2} /></span>
@@ -468,7 +468,7 @@ function App({ onReady }: { onReady?: () => void }) {
       <footer className="site-footer">
         <div className="footer-meta"><span>© 2026 SRT SIDECAR</span><span className="footer-credit">SHIPPED BY <a href="https://aryanjohnsharma.github.io/" target="_blank" rel="noreferrer noopener">@aryanjohnsharma</a></span></div>
         <div className="footer-actions">
-          <a className="footer-social" href="https://x.com/aryanjohnsharma" target="_blank" rel="noreferrer noopener" aria-label="Follow Aryan on X"><span className="footer-social-mark footer-x-mark" aria-hidden="true">𝕏</span><span>X / Twitter</span></a>
+          <a className="footer-social" href="https://x.com/aryanjohnsharma" target="_blank" rel="noreferrer noopener" aria-label="Follow Aryan on X"><span className="footer-social-mark footer-x-mark" aria-hidden="true">𝕏</span><span>X</span></a>
           <a className="footer-social" href="https://www.instagram.com/aryanjohnsharma/" target="_blank" rel="noreferrer noopener" aria-label="Follow Aryan on Instagram"><span className="footer-social-mark" aria-hidden="true"><svg viewBox="0 0 20 20" fill="none"><rect x="2.5" y="2.5" width="15" height="15" rx="4.2"/><circle cx="10" cy="10" r="3.4"/><circle className="instagram-dot" cx="14.8" cy="5.4" r=".9"/></svg></span><span>Instagram</span></a>
           <MetalButton variant="steel" wrapperClassName="footer-book-wrap" className="metal-button-cta footer-book-button" disabled title="Calendly booking link coming soon" aria-label="Book a call. Calendly link coming soon"><Gauge size={13} /> Book a call</MetalButton>
         </div>
