@@ -95,9 +95,50 @@
   text-underline-offset: 3px;
 }
 
-.footer-actions > a:hover {
-  color: var(--accent-dark);
-  text-decoration: underline;
+.footer-actions > .footer-social {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  min-height: 36px;
+  padding: 7px 11px;
+  border: 1px solid #dfe3dc;
+  border-radius: 999px;
+  background: #fff;
+  color: #3e4942;
+  font-size: 11px;
+  font-weight: 600;
+  line-height: 1;
+  text-decoration: none;
+  white-space: nowrap;
+  transition: background-color 150ms ease-out, border-color 150ms ease-out, color 150ms ease-out;
+}
+
+.footer-actions > .footer-social:hover {
+  border-color: #aabdb2;
+  background: #f0f5f1;
+  color: #1d5145;
+}
+
+.footer-social-mark {
+  display: grid;
+  width: 17px;
+  height: 17px;
+  place-items: center;
+  color: currentColor;
+  font-size: 15px;
+  line-height: 1;
+}
+
+.footer-social-mark svg {
+  width: 16px;
+  height: 16px;
+  stroke: currentColor;
+  stroke-width: 1.6;
+}
+
+.footer-social-mark .instagram-dot {
+  fill: currentColor;
+  stroke: none;
 }
 
 .footer-book-wrap {

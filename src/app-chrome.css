@@ -41,6 +41,8 @@ html[data-theme="dark"],html[data-theme="dark"] body{background:#171a18;color:#e
 .app-shell[data-theme="dark"] .floating-export-inner>span,.app-shell[data-theme="dark"] .site-footer,.app-shell[data-theme="dark"] .editor-footer{color:#b2bab2}
 .app-shell[data-theme="dark"] .site-footer{border-color:#39403a}
 .app-shell[data-theme="dark"] .footer-actions>a,.app-shell[data-theme="dark"] .footer-credit a,.app-shell[data-theme="dark"] .editor-footer button,.app-shell[data-theme="dark"] .recent-open{color:#a4d0c1}
+.app-shell[data-theme="dark"] .footer-actions>.footer-social{border-color:#454f48;background:#252b26;color:#dde5de}
+.app-shell[data-theme="dark"] .footer-actions>.footer-social:hover{border-color:#778d80;background:#303a33;color:#fff}
 .app-shell[data-theme="dark"] .floating-export-inner>span strong,.app-shell[data-theme="dark"] .bottom-count{color:#9dd3c1}
 .app-shell[data-theme="dark"] .metal-button-cta{color:#182126}
 .app-shell[data-theme="dark"] .error-note,.app-shell[data-theme="dark"] .validation-note,.app-shell[data-theme="dark"] .large-file-note,.app-shell[data-theme="dark"] .audio-missing{background:#332c24;border-color:#66543d;color:#f0d8aa}

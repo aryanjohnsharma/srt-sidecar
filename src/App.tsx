@@ -468,8 +468,8 @@ function App({ onReady }: { onReady?: () => void }) {
       <footer className="site-footer">
         <div className="footer-meta"><span>© 2026 SRT SIDECAR</span><span className="footer-credit">SHIPPED BY <a href="https://aryanjohnsharma.github.io/" target="_blank" rel="noreferrer noopener">@aryanjohnsharma</a></span></div>
         <div className="footer-actions">
-          <a href="https://x.com/aryanjohnsharma" target="_blank" rel="noreferrer noopener" aria-label="SRT Sidecar on X">X</a>
-          <a href="https://www.instagram.com/aryanjohnsharma/" target="_blank" rel="noreferrer noopener" aria-label="SRT Sidecar on Instagram">Instagram</a>
+          <a className="footer-social" href="https://x.com/aryanjohnsharma" target="_blank" rel="noreferrer noopener" aria-label="Follow Aryan on X"><span className="footer-social-mark footer-x-mark" aria-hidden="true">𝕏</span><span>X / Twitter</span></a>
+          <a className="footer-social" href="https://www.instagram.com/aryanjohnsharma/" target="_blank" rel="noreferrer noopener" aria-label="Follow Aryan on Instagram"><span className="footer-social-mark" aria-hidden="true"><svg viewBox="0 0 20 20" fill="none"><rect x="2.5" y="2.5" width="15" height="15" rx="4.2"/><circle cx="10" cy="10" r="3.4"/><circle className="instagram-dot" cx="14.8" cy="5.4" r=".9"/></svg></span><span>Instagram</span></a>
           <MetalButton variant="steel" wrapperClassName="footer-book-wrap" className="metal-button-cta footer-book-button" disabled title="Calendly booking link coming soon" aria-label="Book a call. Calendly link coming soon"><Gauge size={13} /> Book a call</MetalButton>
         </div>
       </footer>
