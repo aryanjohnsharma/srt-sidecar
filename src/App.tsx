@@ -51,7 +51,6 @@ function App({ onReady }: { onReady?: () => void }) {
   const [reselectAudio, setReselectAudio] = useState(false)
   const [installPrompt, setInstallPrompt] = useState<InstallPrompt | null>(null)
   const [modelCacheStatus, setModelCacheStatus] = useState('Checking')
-  const [online, setOnline] = useState(navigator.onLine)
   const [theme, setTheme] = useState<'light' | 'dark'>(() => window.localStorage.getItem('srt-sidecar-theme') === 'dark' ? 'dark' : 'light')
   const audioRef = useRef<HTMLAudioElement>(null)
   const workerRef = useRef<Worker | null>(null)
@@ -110,13 +109,9 @@ function App({ onReady }: { onReady?: () => void }) {
     void listProjects().then(setProjects).catch(() => setStorageMessage('Local project history is unavailable in this browser. You can still export SRT files.'))
     const onInstall = (event: Event) => { event.preventDefault(); setInstallPrompt(event as InstallPrompt) }
     window.addEventListener('beforeinstallprompt', onInstall)
-    const onOnline = () => setOnline(true)
-    const onOffline = () => setOnline(false)
-    window.addEventListener('online', onOnline)
-    window.addEventListener('offline', onOffline)
     if ('caches' in window) void caches.open('transformers-cache').then((cache) => cache.keys()).then((keys) => setModelCacheStatus(keys.length ? 'Cached' : 'Not downloaded')).catch(() => setModelCacheStatus('Unavailable'))
     else setModelCacheStatus('Unavailable')
-    return () => { window.removeEventListener('beforeinstallprompt', onInstall); window.removeEventListener('online', onOnline); window.removeEventListener('offline', onOffline) }
+    return () => { window.removeEventListener('beforeinstallprompt', onInstall) }
   }, [])
   useEffect(() => {
     if (phase !== 'review' || !words.length || (!file && !currentProjectId)) return
@@ -392,7 +387,6 @@ function App({ onReady }: { onReady?: () => void }) {
           <span className="brand-mark"><AudioLines size={19} strokeWidth={2.2} /></span>
           <span className="brand-name">srt<span>sidecar</span></span>
         </a>
-        <div className="topbar-center"><span className="privacy-dot" /> PRIVATE BY DESIGN <span className="topbar-separator">·</span> {online ? 'READY TO WORK' : 'OFFLINE'}</div>
         <div className="topbar-actions">
           <a className="topbar-author" href="https://aryanjohnsharma.github.io/" target="_blank" rel="noreferrer noopener">by @aryanjohnsharma</a>
           {installPrompt ? <MetalButton variant="steel" wrapperClassName="header-metal-wrap" className="metal-button-cta header-metal-button" type="button" onClick={() => void installApp()}>Install app <ArrowDownToLine size={14} /></MetalButton> : <a className="topbar-link" href="#how-it-works" onClick={(e) => { e.preventDefault(); document.getElementById('how-it-works')?.scrollIntoView({ behavior: 'smooth' }) }}><CircleHelp size={15} /> How it works</a>}
