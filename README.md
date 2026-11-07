@@ -15,17 +15,6 @@ No account. No audio upload to an SRT Sidecar server.
 - Reopens projects for editing or export; reconnect the original audio to resume playback.
 - Includes a sample project to explore the editor without downloading the model.
 
-## Run it
-
-Requires Node.js and npm.
-
-```bash
-npm install
-npm run dev
-```
-
-Create a production build with `npm run build`. Preview it locally with `npm run preview`.
-
 ## How transcription works
 
 The app uses [`onnx-community/whisper-base_timestamped`](https://huggingface.co/onnx-community/whisper-base_timestamped) through Transformers.js. Model assets download the first time you transcribe and are cached by the browser when available. The app tries WebGPU and retries with WASM if WebGPU returns incomplete word timings.
