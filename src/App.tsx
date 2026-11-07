@@ -390,7 +390,7 @@ function App({ onReady }: { onReady?: () => void }) {
         <div className="topbar-actions">
           <a className="topbar-author" href="https://aryanjohnsharma.github.io/" target="_blank" rel="noreferrer noopener">by @aryanjohnsharma</a>
           {installPrompt ? <MetalButton variant="steel" wrapperClassName="header-metal-wrap" className="metal-button-cta header-metal-button" type="button" onClick={() => void installApp()}>Install app <ArrowDownToLine size={14} /></MetalButton> : <a className="topbar-link" href="#how-it-works" onClick={(e) => { e.preventDefault(); document.getElementById('how-it-works')?.scrollIntoView({ behavior: 'smooth' }) }}><CircleHelp size={15} /> How it works</a>}
-          <MetalButton variant="steel" wrapperClassName="header-metal-wrap" className="metal-button-cta header-metal-button" type="button" aria-label={`Switch to ${theme === 'light' ? 'dark' : 'light'} theme`} aria-pressed={theme === 'dark'} onClick={switchTheme}><span aria-hidden="true">{theme === 'light' ? <SunsamaIcon /> : <MoonIcon />}</span><span>{theme === 'light' ? 'Dark' : 'Light'}</span></MetalButton>
+          <MetalButton variant="steel" wrapperClassName="header-metal-wrap" className="metal-button-cta header-metal-button" type="button" aria-label={`Switch to ${theme === 'light' ? 'dark' : 'light'} theme`} aria-pressed={theme === 'dark'} onClick={switchTheme}><span aria-hidden="true">{theme === 'light' ? <MoonIcon /> : <SunsamaIcon />}</span><span>{theme === 'light' ? 'Dark' : 'Light'}</span></MetalButton>
         </div>
       </header>
 
