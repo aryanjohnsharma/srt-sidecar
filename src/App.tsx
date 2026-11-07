@@ -376,8 +376,8 @@ function App({ onReady }: { onReady?: () => void }) {
         <div className="topbar-center"><span className="privacy-dot" /> PRIVATE BY DESIGN <span className="topbar-separator">·</span> {online ? 'READY TO WORK' : 'OFFLINE'}</div>
         <div className="topbar-actions">
           <a className="topbar-author" href="https://aryanjohnsharma.github.io/" target="_blank" rel="noreferrer noopener">by @aryanjohnsharma</a>
-          <button className="topbar-theme" type="button" aria-label={`Switch to ${theme === 'light' ? 'dark' : 'light'} theme`} aria-pressed={theme === 'dark'} onClick={() => setTheme(theme === 'light' ? 'dark' : 'light')}><span aria-hidden="true">{theme === 'light' ? '◐' : '☼'}</span><span>{theme === 'light' ? 'Dark' : 'Light'}</span></button>
-          {installPrompt ? <button className="topbar-link install-link" onClick={() => void installApp()}>Install app <ArrowDownToLine size={14} /></button> : <a className="topbar-link" href="#how-it-works" onClick={(e) => { e.preventDefault(); document.getElementById('how-it-works')?.scrollIntoView({ behavior: 'smooth' }) }}><CircleHelp size={15} /> How it works</a>}
+          <MetalButton variant="steel" wrapperClassName="header-metal-wrap" className="metal-button-cta header-metal-button" type="button" aria-label={`Switch to ${theme === 'light' ? 'dark' : 'light'} theme`} aria-pressed={theme === 'dark'} onClick={() => setTheme(theme === 'light' ? 'dark' : 'light')}><span aria-hidden="true">{theme === 'light' ? '◐' : '☼'}</span><span>{theme === 'light' ? 'Dark' : 'Light'}</span></MetalButton>
+          {installPrompt ? <MetalButton variant="steel" wrapperClassName="header-metal-wrap" className="metal-button-cta header-metal-button" type="button" onClick={() => void installApp()}>Install app <ArrowDownToLine size={14} /></MetalButton> : <a className="topbar-link" href="#how-it-works" onClick={(e) => { e.preventDefault(); document.getElementById('how-it-works')?.scrollIntoView({ behavior: 'smooth' }) }}><CircleHelp size={15} /> How it works</a>}
         </div>
       </header>
 
