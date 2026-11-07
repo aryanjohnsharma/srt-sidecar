@@ -5,6 +5,7 @@ import { MoonIcon, SquareInstagramIcon, SunsamaIcon, XTwitterIcon } from './comp
 import { buildCues, formatTimestamp, serializeSrt, validateCues, type Settings, type Word } from './lib/srt'
 import { clearProjects, deleteProject, listProjects, saveProject, type SavedProject } from './lib/projects'
 import { MetalButton } from './components/metal-button'
+import { BookUsingAssistantButton } from './components/book-using-assistant-button'
 import './project-ui.css'
 import './metal-button.css'
 import './motion.css'
@@ -483,7 +484,7 @@ function App({ onReady }: { onReady?: () => void }) {
         <div className="footer-actions">
           <a className="footer-social" href="https://x.com/aryanjohnsharma" target="_blank" rel="noreferrer noopener" aria-label="Follow Aryan on X"><span className="footer-social-mark" aria-hidden="true"><XTwitterIcon /></span></a>
           <a className="footer-social" href="https://www.instagram.com/aryanjohnsharma/" target="_blank" rel="noreferrer noopener" aria-label="Follow Aryan on Instagram"><span className="footer-social-mark" aria-hidden="true"><SquareInstagramIcon /></span></a>
-          <MetalButton variant="steel" wrapperClassName="footer-book-wrap" className="metal-button-cta footer-book-button" disabled title="Calendly booking link coming soon" aria-label="Book a call. Calendly link coming soon"><Gauge size={13} /> Book a call</MetalButton>
+          <BookUsingAssistantButton theme={theme} />
         </div>
       </footer>
     </div>
