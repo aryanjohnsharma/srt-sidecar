@@ -102,13 +102,18 @@
 
 .footer-book-wrap {
   display: inline-flex;
+  flex: 0 0 auto;
 }
 
 .footer-book-button {
-  min-height: 42px;
-  padding: 10px 16px !important;
+  min-height: 44px;
+  padding: 11px 17px !important;
   gap: 9px;
-  font-size: 12px !important;
+  color: #11181c !important;
+  -webkit-text-fill-color: #11181c;
+  font-size: 13px !important;
+  font-weight: 700 !important;
+  white-space: nowrap;
 }
 
 .footer-book-button:disabled {
