@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useMemo, useRef, useState, type DragEvent } from 'react'
+import { useCallback, useEffect, useMemo, useRef, useState, type DragEvent, type MouseEvent } from 'react'
 import { AudioLines, ArrowDownToLine, ArrowLeft, Check, ChevronDown, CircleHelp, FileAudio2, FileText, Gauge, Headphones, LockKeyhole, Pause, Play, Plus, RotateCcw, Settings2, ShieldCheck, Sparkles, Upload, Volume2, X } from './components/pika-ui-icons'
 import Dither from './components/Dither'
 import { buildCues, formatTimestamp, serializeSrt, validateCues, type Settings, type Word } from './lib/srt'
@@ -61,6 +61,31 @@ function App({ onReady }: { onReady?: () => void }) {
   const cues = useMemo(() => buildCues(words, settings), [words, settings])
   const cueIssues = useMemo(() => validateCues(cues, settings), [cues, settings])
   const audioUrl = useMemo(() => file ? URL.createObjectURL(file) : '', [file])
+
+  const switchTheme = (event: MouseEvent<HTMLButtonElement>) => {
+    const nextTheme = theme === 'light' ? 'dark' : 'light'
+    const viewDocument = document as Document & { startViewTransition?: (update: () => void) => { finished: Promise<void> } }
+    if (reducedMotion) {
+      setTheme(nextTheme)
+      return
+    }
+    if (!viewDocument.startViewTransition) {
+      document.documentElement.classList.add('theme-switching')
+      setTheme(nextTheme)
+      window.setTimeout(() => document.documentElement.classList.remove('theme-switching'), 200)
+      return
+    }
+    document.documentElement.style.setProperty('--theme-switch-x', `${event.clientX}px`)
+    document.documentElement.style.setProperty('--theme-switch-y', `${event.clientY}px`)
+    const transition = viewDocument.startViewTransition(() => setTheme(nextTheme))
+    void transition.finished.then(() => {
+      document.documentElement.style.removeProperty('--theme-switch-x')
+      document.documentElement.style.removeProperty('--theme-switch-y')
+    }, () => {
+      document.documentElement.style.removeProperty('--theme-switch-x')
+      document.documentElement.style.removeProperty('--theme-switch-y')
+    })
+  }
 
   const transitionPhase = (next: Phase) => {
     const viewDocument = document as Document & { startViewTransition?: (update: () => void) => unknown }
@@ -377,7 +402,7 @@ function App({ onReady }: { onReady?: () => void }) {
         <div className="topbar-actions">
           <a className="topbar-author" href="https://aryanjohnsharma.github.io/" target="_blank" rel="noreferrer noopener">by @aryanjohnsharma</a>
           {installPrompt ? <MetalButton variant="steel" wrapperClassName="header-metal-wrap" className="metal-button-cta header-metal-button" type="button" onClick={() => void installApp()}>Install app <ArrowDownToLine size={14} /></MetalButton> : <a className="topbar-link" href="#how-it-works" onClick={(e) => { e.preventDefault(); document.getElementById('how-it-works')?.scrollIntoView({ behavior: 'smooth' }) }}><CircleHelp size={15} /> How it works</a>}
-          <MetalButton variant="steel" wrapperClassName="header-metal-wrap" className="metal-button-cta header-metal-button" type="button" aria-label={`Switch to ${theme === 'light' ? 'dark' : 'light'} theme`} aria-pressed={theme === 'dark'} onClick={() => setTheme(theme === 'light' ? 'dark' : 'light')}><span aria-hidden="true">{theme === 'light' ? '◐' : '☼'}</span><span>{theme === 'light' ? 'Dark' : 'Light'}</span></MetalButton>
+          <MetalButton variant="steel" wrapperClassName="header-metal-wrap" className="metal-button-cta header-metal-button" type="button" aria-label={`Switch to ${theme === 'light' ? 'dark' : 'light'} theme`} aria-pressed={theme === 'dark'} onClick={switchTheme}><span aria-hidden="true">{theme === 'light' ? '◐' : '☼'}</span><span>{theme === 'light' ? 'Dark' : 'Light'}</span></MetalButton>
         </div>
       </header>
 

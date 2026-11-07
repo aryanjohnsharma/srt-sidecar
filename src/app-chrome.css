@@ -1,6 +1,12 @@
 :root{color-scheme:light}
 .loading-splash{position:fixed;inset:0;z-index:1000;display:grid;place-items:center;overflow:hidden;background:#e2e2e5;opacity:1;transition:opacity 220ms ease-out}
 .loading-splash-leaving{opacity:0;pointer-events:none}
+.theme-switching .app-shell{animation:theme-switch-blur 200ms ease-out both}
+@keyframes theme-switch-blur{from{filter:blur(3px)}to{filter:blur(0)}}
+::view-transition-old(root){animation:theme-old-out 200ms ease-out both}
+::view-transition-new(root){animation:theme-color-splash 200ms ease-out both}
+@keyframes theme-old-out{to{filter:blur(3px);opacity:0}}
+@keyframes theme-color-splash{from{clip-path:circle(0 at var(--theme-switch-x,50vw) var(--theme-switch-y,50vh));filter:blur(3px)}to{clip-path:circle(150vmax at var(--theme-switch-x,50vw) var(--theme-switch-y,50vh));filter:blur(0)}}
 .app-shell{position:relative;isolation:isolate}
 .app-shell.has-floating-export{padding-bottom:100px}
 .ambient-layer{position:fixed;inset:0;z-index:0;overflow:hidden;pointer-events:none;opacity:.23}
@@ -20,6 +26,7 @@
 .floating-export-button{width:150px;min-height:44px;flex:none}
 @media(max-width:620px){.app-shell.has-floating-export{padding-bottom:calc(112px + env(safe-area-inset-bottom))}.topbar{height:62px;padding:0 17px}.floating-export{bottom:calc(12px + env(safe-area-inset-bottom))!important}.floating-export-inner{padding:0 7px 0 16px}.floating-export-button{width:138px}}
 @media(prefers-reduced-motion:reduce){.loading-splash{transition:none}}
+@media(prefers-reduced-motion:reduce){.theme-switching .app-shell,::view-transition-old(root),::view-transition-new(root){animation:none!important}}
 
 html[data-theme="dark"],html[data-theme="dark"] body{background:#171a18;color:#edf0eb}
 .app-shell[data-theme="dark"]{--ink:#edf0eb;--muted:#a3aaa2;--line:#39403a;--paper:#222723;--accent:#83b8a8;--accent-dark:#a1d0c1;background:#171a18;color:#edf0eb}
