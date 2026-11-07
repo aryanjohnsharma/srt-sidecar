@@ -1,6 +1,7 @@
 import { useCallback, useEffect, useMemo, useRef, useState, type DragEvent, type MouseEvent } from 'react'
 import { AudioLines, ArrowDownToLine, ArrowLeft, Check, ChevronDown, CircleHelp, FileAudio2, FileText, Gauge, Headphones, LockKeyhole, Pause, Play, Plus, RotateCcw, Settings2, ShieldCheck, Sparkles, Upload, Volume2, X } from './components/pika-ui-icons'
 import Dither from './components/Dither'
+import { MoonIcon, SquareInstagramIcon, SunsamaIcon, XTwitterIcon } from './components/brand-icons'
 import { buildCues, formatTimestamp, serializeSrt, validateCues, type Settings, type Word } from './lib/srt'
 import { clearProjects, deleteProject, listProjects, saveProject, type SavedProject } from './lib/projects'
 import { MetalButton } from './components/metal-button'
@@ -395,7 +396,7 @@ function App({ onReady }: { onReady?: () => void }) {
         <div className="topbar-actions">
           <a className="topbar-author" href="https://aryanjohnsharma.github.io/" target="_blank" rel="noreferrer noopener">by @aryanjohnsharma</a>
           {installPrompt ? <MetalButton variant="steel" wrapperClassName="header-metal-wrap" className="metal-button-cta header-metal-button" type="button" onClick={() => void installApp()}>Install app <ArrowDownToLine size={14} /></MetalButton> : <a className="topbar-link" href="#how-it-works" onClick={(e) => { e.preventDefault(); document.getElementById('how-it-works')?.scrollIntoView({ behavior: 'smooth' }) }}><CircleHelp size={15} /> How it works</a>}
-          <MetalButton variant="steel" wrapperClassName="header-metal-wrap" className="metal-button-cta header-metal-button" type="button" aria-label={`Switch to ${theme === 'light' ? 'dark' : 'light'} theme`} aria-pressed={theme === 'dark'} onClick={switchTheme}><span aria-hidden="true">{theme === 'light' ? '◐' : '☼'}</span><span>{theme === 'light' ? 'Dark' : 'Light'}</span></MetalButton>
+          <MetalButton variant="steel" wrapperClassName="header-metal-wrap" className="metal-button-cta header-metal-button" type="button" aria-label={`Switch to ${theme === 'light' ? 'dark' : 'light'} theme`} aria-pressed={theme === 'dark'} onClick={switchTheme}><span aria-hidden="true">{theme === 'light' ? <SunsamaIcon /> : <MoonIcon />}</span><span>{theme === 'light' ? 'Dark' : 'Light'}</span></MetalButton>
         </div>
       </header>
 
@@ -486,8 +487,8 @@ function App({ onReady }: { onReady?: () => void }) {
       <footer className="site-footer">
         <div className="footer-meta"><span>© 2026 SRT SIDECAR</span><span className="footer-credit">SHIPPED BY <a href="https://aryanjohnsharma.github.io/" target="_blank" rel="noreferrer noopener">@aryanjohnsharma</a></span></div>
         <div className="footer-actions">
-          <a className="footer-social" href="https://x.com/aryanjohnsharma" target="_blank" rel="noreferrer noopener" aria-label="Follow Aryan on X"><span className="footer-social-mark footer-x-mark" aria-hidden="true">𝕏</span><span>X</span></a>
-          <a className="footer-social" href="https://www.instagram.com/aryanjohnsharma/" target="_blank" rel="noreferrer noopener" aria-label="Follow Aryan on Instagram"><span className="footer-social-mark" aria-hidden="true"><svg viewBox="0 0 20 20" fill="none"><rect x="2.5" y="2.5" width="15" height="15" rx="4.2"/><circle cx="10" cy="10" r="3.4"/><circle className="instagram-dot" cx="14.8" cy="5.4" r=".9"/></svg></span><span>Instagram</span></a>
+          <a className="footer-social" href="https://x.com/aryanjohnsharma" target="_blank" rel="noreferrer noopener" aria-label="Follow Aryan on X"><span className="footer-social-mark" aria-hidden="true"><XTwitterIcon /></span><span>X</span></a>
+          <a className="footer-social" href="https://www.instagram.com/aryanjohnsharma/" target="_blank" rel="noreferrer noopener" aria-label="Follow Aryan on Instagram"><span className="footer-social-mark" aria-hidden="true"><SquareInstagramIcon /></span><span>Instagram</span></a>
           <MetalButton variant="steel" wrapperClassName="footer-book-wrap" className="metal-button-cta footer-book-button" disabled title="Calendly booking link coming soon" aria-label="Book a call. Calendly link coming soon"><Gauge size={13} /> Book a call</MetalButton>
         </div>
       </footer>

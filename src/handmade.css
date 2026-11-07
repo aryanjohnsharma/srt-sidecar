@@ -131,15 +131,9 @@
 }
 
 .footer-social-mark svg {
+  display: block;
   width: 16px;
   height: 16px;
-  stroke: currentColor;
-  stroke-width: 1.6;
-}
-
-.footer-social-mark .instagram-dot {
-  fill: currentColor;
-  stroke: none;
 }
 
 .footer-book-wrap {
