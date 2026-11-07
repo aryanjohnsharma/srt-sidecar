@@ -393,7 +393,7 @@ function App({ onReady }: { onReady?: () => void }) {
               <div className="setup-divider" />
               <div className="model-note"><span className="model-dot" /><div><strong>Whisper Base <small className="model-cache-status">{modelCacheStatus}</small></strong><span>Runs on your device · {modelCacheStatus === 'Cached' ? 'model cached when browser storage allows' : 'downloads on first use'}</span></div></div>
             </div>
-            <MetalButton variant="success" wrapperClassName="metal-button-full" className="metal-button-cta start-button" disabled={!file} onClick={() => void transcribe()}>Transcribe audio <ArrowDownToLine size={16} className="button-arrow" /></MetalButton>
+            <MetalButton variant="steel" wrapperClassName="metal-button-full" className="metal-button-cta start-button" disabled={!file} onClick={() => void transcribe()}>Transcribe audio <ArrowDownToLine size={16} className="button-arrow" /></MetalButton>
             <div className="upload-footnote"><LockKeyhole size={13} /> Your audio stays in your browser. Nothing is uploaded to a Sidecar server.</div>
           </section>
           <section className="value-row" id="how-it-works">
@@ -441,12 +441,12 @@ function App({ onReady }: { onReady?: () => void }) {
               <button className="advanced-toggle" onClick={() => setAdvanced(!advanced)} aria-expanded={advanced}><span><Gauge size={15} /> Fine-tune your timing</span><ChevronDown size={15} className={advanced ? 'rotate' : ''} /></button>
               {advanced && <div className="advanced-controls"><label>Max cue duration <span><input aria-label="Max cue duration in seconds" type="number" min="0.1" step="0.1" placeholder="No limit" value={settings.maxDuration ?? ''} onChange={(e) => setNumber('maxDuration', e.target.value)} /> sec</span></label><label>Max characters <input aria-label="Maximum characters per cue" type="number" min="1" placeholder="No limit" value={settings.maxChars ?? ''} onChange={(e) => setNumber('maxChars', e.target.value)} /></label><label className="toggle-label">Break at sentence ends <input type="checkbox" checked={settings.sentenceAware} onChange={(e) => setSettings((s) => ({ ...s, sentenceAware: e.target.checked }))} /><span className="toggle-ui" /></label><label className="toggle-label">Preserve pauses over 0.6 sec <input type="checkbox" checked={settings.preservePauses} onChange={(e) => setSettings((s) => ({ ...s, preservePauses: e.target.checked }))} /><span className="toggle-ui" /></label><button className="reset-button" onClick={() => setSettings({ maxWords: 1, maxDuration: null, maxChars: null, sentenceAware: false, preservePauses: true })}><RotateCcw size={12} /> Reset settings</button></div>}
               <div className="settings-example"><span className="example-label">A LITTLE PREVIEW</span><div className="example-cue">{cues[0]?.text || 'Your words'}<small>{cues[0] ? `${formatTimestamp(cues[0].start).slice(3)} → ${formatTimestamp(cues[0].end).slice(3)}` : '00:00,000 → 00:00,000'}</small></div></div>
-              <div className="settings-bottom"><div><span className="bottom-count">{cues.length}</span><span> cues · UTF-8 SRT</span></div><MetalButton variant="success" wrapperClassName="metal-button-full" className="metal-button-cta export-button" onClick={exportSrt} disabled={!cues.length || cueIssues.some((issue) => issue.severity === 'error')}><ArrowDownToLine size={15} /> Export SRT</MetalButton><div className="export-footnote"><LockKeyhole size={12} /> Created locally in your browser</div></div>
+              <div className="settings-bottom"><div><span className="bottom-count">{cues.length}</span><span> cues · UTF-8 SRT</span></div><MetalButton variant="steel" wrapperClassName="metal-button-full" className="metal-button-cta export-button" onClick={exportSrt} disabled={!cues.length || cueIssues.some((issue) => issue.severity === 'error')}><ArrowDownToLine size={15} /> Export SRT</MetalButton><div className="export-footnote"><LockKeyhole size={12} /> Created locally in your browser</div></div>
             </aside>
           </div>
           <footer className="editor-footer"><span><Headphones size={14} /> Model-estimated timing. Give your cues a listen before export.</span><button onClick={useSample}><Sparkles size={13} /> Preview sample</button></footer>
           <div className="floating-export" style={{ position: 'fixed', left: '50%', bottom: 'calc(16px + env(safe-area-inset-bottom))', transform: 'translateX(-50%)', zIndex: 25 }}>
-            <div className="floating-export-inner"><span><strong>{cues.length}</strong> cues <i /> UTF-8 SRT</span><MetalButton variant="success" wrapperClassName="metal-button-floating" className="metal-button-cta floating-export-button" onClick={exportSrt} disabled={!cues.length}><ArrowDownToLine size={15} /> Export SRT</MetalButton></div>
+            <div className="floating-export-inner"><span><strong>{cues.length}</strong> cues <i /> UTF-8 SRT</span><MetalButton variant="steel" wrapperClassName="metal-button-floating" className="metal-button-cta floating-export-button" onClick={exportSrt} disabled={!cues.length}><ArrowDownToLine size={15} /> Export SRT</MetalButton></div>
           </div>
         </>}
       </main>
@@ -463,7 +463,7 @@ function App({ onReady }: { onReady?: () => void }) {
         <div className="footer-actions">
           <a href="https://x.com/aryanjohnsharma" target="_blank" rel="noreferrer noopener" aria-label="SRT Sidecar on X">X</a>
           <a href="https://www.instagram.com/aryanjohnsharma/" target="_blank" rel="noreferrer noopener" aria-label="SRT Sidecar on Instagram">Instagram</a>
-          <MetalButton variant="success" wrapperClassName="footer-book-wrap" className="metal-button-cta footer-book-button" disabled title="Calendly booking link coming soon" aria-label="Book a call. Calendly link coming soon"><Gauge size={13} /> Book a call</MetalButton>
+          <MetalButton variant="steel" wrapperClassName="footer-book-wrap" className="metal-button-cta footer-book-button" disabled title="Calendly booking link coming soon" aria-label="Book a call. Calendly link coming soon"><Gauge size={13} /> Book a call</MetalButton>
         </div>
       </footer>
     </div>

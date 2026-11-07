@@ -30,7 +30,7 @@
 
 .metal-button-cta:disabled {
   cursor: not-allowed;
-  opacity: 0.48;
+  opacity: 0.72;
 }
 
 .metal-button-cta:focus-visible {
