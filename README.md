@@ -16,8 +16,11 @@ No account. No audio upload to an SRT Sidecar server.
 - Includes a sample project to explore the editor without downloading the model.
 
 ## How transcription works
+<p align="center">
+  <img src="docs/assets/transcription-workflow.png" alt="SRT Sidecar workflow: choose audio, transcribe locally, edit words and timing, then export an SRT" width="100%" />
+</p>
 
-The app runs [`onnx-community/whisper-base_timestamped`](https://huggingface.co/onnx-community/whisper-base_timestamped) through Transformers.js in a browser worker, using the quantized WASM runtime for consistent desktop and mobile behavior. Model assets download on first use, show aggregate download progress, and are cached by the browser when available. Audio stays on your device.
+The diagram shows the workflow. Its WebGPU and WASM labels illustrate runtime options; the current app uses quantized WASM directly. It runs [`onnx-community/whisper-base_timestamped`](https://huggingface.co/onnx-community/whisper-base_timestamped) through Transformers.js in a browser worker, using the quantized WASM runtime for consistent desktop and mobile behavior. Model assets download on first use, show aggregate download progress, and are cached by the browser when available. Audio stays on your device.
 
 A local browser check transcribed a 16.7-second MP3 into 68 timed words and exported 68 valid SRT cues. This checks the workflow, not recognition quality. Accuracy across real recordings, speakers, languages, browsers, and devices still needs broader evaluation. [See validation notes](docs/VALIDATION.md).
 
