@@ -142,6 +142,28 @@
   margin-left: auto;
 }
 
+.progress-track.is-indeterminate > span {
+  width: 28%;
+  transform: translateX(-120%);
+  animation: local-progress-sweep 1.25s cubic-bezier(.45, 0, .55, 1) infinite;
+  -webkit-mask-image: none;
+  mask-image: none;
+}
+
+@keyframes local-progress-sweep {
+  to { transform: translateX(460%); }
+}
+
+.transcript-timing-note {
+  margin-top: 8px;
+  color: #7a6b42 !important;
+  font-size: 11px !important;
+}
+
+.app-shell[data-theme="dark"] .transcript-timing-note {
+  color: #dfca91 !important;
+}
+
 .footer-book-button {
   height: 28px !important;
   min-height: 28px !important;

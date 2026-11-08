@@ -17,9 +17,9 @@ No account. No audio upload to an SRT Sidecar server.
 
 ## How transcription works
 
-The app uses [`onnx-community/whisper-base_timestamped`](https://huggingface.co/onnx-community/whisper-base_timestamped) through Transformers.js. Model assets download the first time you transcribe and are cached by the browser when available. The app tries WebGPU and retries with WASM if WebGPU returns incomplete word timings.
+The app runs [`onnx-community/whisper-base_timestamped`](https://huggingface.co/onnx-community/whisper-base_timestamped) through Transformers.js in a browser worker, using the quantized WASM runtime for consistent desktop and mobile behavior. Model assets download on first use, show aggregate download progress, and are cached by the browser when available. Audio stays on your device.
 
-The first 60-second synthetic English smoke check completed through the WASM retry and produced 123 timed words with valid SRT cues. It is a pipeline check, not a quality benchmark. Accuracy across real recordings, speakers, languages, browsers, and devices still needs broader evaluation. [See validation notes](docs/VALIDATION.md).
+A local browser check transcribed a 16.7-second MP3 into 68 timed words and exported 68 valid SRT cues. This checks the workflow, not recognition quality. Accuracy across real recordings, speakers, languages, browsers, and devices still needs broader evaluation. [See validation notes](docs/VALIDATION.md).
 
 ## Stack
 

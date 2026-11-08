@@ -10,7 +10,7 @@
   },
   "dependencies": {
     "@calcom/embed-react": "^1.5.3",
-    "@huggingface/transformers": "^3.8.1",
+    "@huggingface/transformers": "4.3.2",
     "@pikaicons/core-free": "^0.1.0",
     "@pikaicons/react": "^0.1.0",
     "clsx": "^2.1.1",

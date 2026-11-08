@@ -37,6 +37,11 @@ function App({ onReady }: { onReady?: () => void }) {
   const [language, setLanguage] = useState('')
   const [status, setStatus] = useState('Getting things ready')
   const [progress, setProgress] = useState(0)
+  const [progressStage, setProgressStage] = useState<'model' | 'inference'>('model')
+  const [hasModelProgress, setHasModelProgress] = useState(false)
+  const [activityCount, setActivityCount] = useState(0)
+  const [elapsedSeconds, setElapsedSeconds] = useState(0)
+  const [transcriptionNotice, setTranscriptionNotice] = useState('')
   const [error, setError] = useState('')
   const [playing, setPlaying] = useState(false)
   const [currentTime, setCurrentTime] = useState(0)
@@ -56,6 +61,7 @@ function App({ onReady }: { onReady?: () => void }) {
   const audioRef = useRef<HTMLAudioElement>(null)
   const workerRef = useRef<Worker | null>(null)
   const jobSequenceRef = useRef(0)
+  const transcriptionStartedAtRef = useRef(0)
   const inputRef = useRef<HTMLInputElement>(null)
   const projectsRef = useRef(projects)
   const cues = useMemo(() => buildCues(words, settings), [words, settings])
@@ -99,6 +105,13 @@ function App({ onReady }: { onReady?: () => void }) {
 
   useEffect(() => () => { if (audioUrl) URL.revokeObjectURL(audioUrl) }, [audioUrl])
   useEffect(() => () => workerRef.current?.terminate(), [])
+  useEffect(() => {
+    if (phase !== 'transcribing' || !transcriptionStartedAtRef.current) return
+    const updateElapsed = () => setElapsedSeconds(Math.floor((Date.now() - transcriptionStartedAtRef.current) / 1000))
+    updateElapsed()
+    const interval = window.setInterval(updateElapsed, 1000)
+    return () => window.clearInterval(interval)
+  }, [phase])
   useEffect(() => { projectsRef.current = projects }, [projects])
   useEffect(() => {
     let cancelled = false
@@ -149,6 +162,7 @@ function App({ onReady }: { onReady?: () => void }) {
       return
     }
     setError('')
+    setTranscriptionNotice('')
     setFile(next)
     setWords([])
     setDuration(0)
@@ -189,6 +203,7 @@ function App({ onReady }: { onReady?: () => void }) {
     setProjectName(project.name)
     setAudioMissing(Boolean(project.sourceName))
     setError('')
+    setTranscriptionNotice('')
     transitionPhase('review')
   }
 
@@ -259,6 +274,12 @@ function App({ onReady }: { onReady?: () => void }) {
     transitionPhase('transcribing')
     setStatus('Preparing audio')
     setProgress(0)
+    setProgressStage('model')
+    setHasModelProgress(false)
+    setActivityCount(0)
+    setElapsedSeconds(0)
+    setTranscriptionNotice('')
+    transcriptionStartedAtRef.current = Date.now()
     let audioContext: AudioContext | null = null
     try {
       const AudioContextConstructor = window.AudioContext || (window as Window & { webkitAudioContext?: typeof AudioContext }).webkitAudioContext
@@ -298,8 +319,17 @@ function App({ onReady }: { onReady?: () => void }) {
       worker.onmessage = (event: MessageEvent) => {
         if (jobSequenceRef.current !== jobId) return
         const data = event.data
-        if (data.type === 'status') { setStatus(data.message); setProgress(data.progress || 0); if (/download/i.test(data.message)) setModelCacheStatus('Downloading') }
-        if (data.type === 'complete') { setWords(data.words as Word[]); transitionPhase('review'); setModelCacheStatus('Cached'); worker.terminate(); workerRef.current = null }
+        if (data.type === 'status') {
+          setStatus(data.message)
+          if (data.stage === 'inference') setProgressStage('inference')
+          if (data.stage === 'model' && Number.isFinite(data.progress)) {
+            setHasModelProgress(true)
+            setProgress((current) => Math.max(current, Math.min(100, Math.max(0, data.progress))))
+            setModelCacheStatus(data.progress >= 100 ? 'Preparing' : 'Downloading')
+          }
+        }
+        if (data.type === 'activity') setActivityCount(Number(data.generatedTokens) || 0)
+        if (data.type === 'complete') { setWords(data.words as Word[]); setTranscriptionNotice(typeof data.warning === 'string' ? data.warning : ''); transitionPhase('review'); setModelCacheStatus('Cached'); worker.terminate(); workerRef.current = null }
         if (data.type === 'error') { setError(data.message); setModelCacheStatus('Error'); transitionPhase('upload'); worker.terminate(); workerRef.current = null }
       }
       worker.postMessage({ type: 'transcribe', audio: mono, language }, [mono.buffer])
@@ -441,10 +471,10 @@ function App({ onReady }: { onReady?: () => void }) {
           </section>
         </>}
 
-        {phase === 'transcribing' && <section className="workspace loading-workspace"><div className="section-kicker">02 <span>·</span> WORKING ON YOUR AUDIO</div><div className="loader-orbit"><AudioLines size={28} /></div><h2>{status}</h2><p>{/download/i.test(status) ? `${Math.round(progress)}% downloaded · this model is saved by your browser when storage allows` : 'Your audio is being processed locally in this browser.'}</p><div className="progress-track"><span style={{ width: `${Math.max(progress, 8)}%` }} /></div><span className="loading-caption"><LockKeyhole size={13} /> Your audio never leaves this device</span><button className="text-button" onClick={() => { jobSequenceRef.current += 1; workerRef.current?.terminate(); workerRef.current = null; transitionPhase('upload') }}>Cancel transcription</button></section>}
+        {phase === 'transcribing' && <section className="workspace loading-workspace"><div className="section-kicker">02 <span>·</span> WORKING ON YOUR AUDIO</div><div className="loader-orbit"><AudioLines size={28} /></div><h2>{status}</h2><p>{progressStage === 'model' ? hasModelProgress ? `${Math.round(progress)}% of Whisper Base files loaded · cached by your browser when storage allows` : 'Preparing the local speech engine and checking for cached model files.' : `${activityCount ? 'Whisper is actively processing your audio' : 'Starting local transcription'} · ${formatDuration(elapsedSeconds)} elapsed. Slower devices may take a few minutes.`}</p><div className={`progress-track${progressStage === 'inference' || !hasModelProgress ? ' is-indeterminate' : ''}`} role="progressbar" aria-label={progressStage === 'model' ? 'Loading Whisper Base model files' : 'Transcribing audio locally'} aria-valuemin={0} aria-valuemax={100} aria-valuenow={progressStage === 'model' && hasModelProgress ? Math.round(progress) : undefined} aria-valuetext={progressStage === 'model' && hasModelProgress ? `${Math.round(progress)} percent of model files loaded` : progressStage === 'inference' ? 'Local transcription is in progress' : 'Preparing the local speech engine'}><span style={progressStage === 'model' && hasModelProgress ? { width: `${Math.max(progress, 2)}%` } : undefined} /></div><span className="loading-caption"><LockKeyhole size={13} /> Your audio never leaves this device</span><button className="text-button" onClick={() => { jobSequenceRef.current += 1; workerRef.current?.terminate(); workerRef.current = null; transitionPhase('upload') }}>Cancel transcription</button></section>}
 
         {phase === 'review' && <>
-          <div className="editor-heading"><button className="back-link" onClick={() => { transitionPhase('upload'); setError('') }}><ArrowLeft size={15} /> New audio</button><div className="editor-title-row"><div><div className="section-kicker">02 <span>·</span> REVIEW & SHAPE</div><h1>Your words.<br /><span>Your rhythm.</span></h1>{currentProjectId && <button className="project-rename" onClick={() => void renameProject()}>{projectName || 'Untitled project'} · rename</button>}</div><span className="ready-pill"><Check size={13} /> READY TO EXPORT</span></div><p className="editor-intro">Tap any word to check it against your audio. Shape the rhythm, then send your SRT to the edit.</p></div>
+          <div className="editor-heading"><button className="back-link" onClick={() => { transitionPhase('upload'); setError('') }}><ArrowLeft size={15} /> New audio</button><div className="editor-title-row"><div><div className="section-kicker">02 <span>·</span> REVIEW & SHAPE</div><h1>Your words.<br /><span>Your rhythm.</span></h1>{currentProjectId && <button className="project-rename" onClick={() => void renameProject()}>{projectName || 'Untitled project'} · rename</button>}</div><span className="ready-pill"><Check size={13} /> READY TO EXPORT</span></div><p className="editor-intro">Tap any word to check it against your audio. Shape the rhythm, then send your SRT to the edit.</p>{transcriptionNotice && <p className="transcript-timing-note" role="status">{transcriptionNotice}</p>}</div>
           <div className="editor-layout">
             <section className="editor-main">
               <div className="audio-card">
