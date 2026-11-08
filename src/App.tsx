@@ -82,16 +82,21 @@ function App({ onReady }: { onReady?: () => void }) {
       window.setTimeout(() => document.documentElement.classList.remove('theme-switching'), 600)
       return
     }
+    document.documentElement.dataset.themeTransitioning = 'true'
     document.documentElement.style.setProperty('--theme-switch-x', `${event.clientX}px`)
     document.documentElement.style.setProperty('--theme-switch-y', `${event.clientY}px`)
-    const transition = viewDocument.startViewTransition(() => setTheme(nextTheme))
-    void transition.finished.then(() => {
+    const cleanup = () => {
+      delete document.documentElement.dataset.themeTransitioning
       document.documentElement.style.removeProperty('--theme-switch-x')
       document.documentElement.style.removeProperty('--theme-switch-y')
-    }, () => {
-      document.documentElement.style.removeProperty('--theme-switch-x')
-      document.documentElement.style.removeProperty('--theme-switch-y')
-    })
+    }
+    try {
+      const transition = viewDocument.startViewTransition(() => setTheme(nextTheme))
+      void transition.finished.then(cleanup, cleanup)
+    } catch {
+      cleanup()
+      setTheme(nextTheme)
+    }
   }
 
   const transitionPhase = (next: Phase) => {
