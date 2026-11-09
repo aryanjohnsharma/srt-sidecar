@@ -443,8 +443,8 @@ function App({ onReady }: { onReady?: () => void }) {
       <main className="main-content">
         {phase === 'upload' && <>
           <section className="hero">
-            <h1>Your edit is done.<br /><span>Let’s give it a voice.</span></h1>
-            <p className="hero-copy">Turn your audio into word-timed subtitles, right here on your device.<br className="desktop-break" /> Ready for whichever editor comes next.</p>
+            <h1>Add word-timed subtitles to your edit.</h1>
+            <p className="hero-copy">Transcribe locally, edit each cue, and export an SRT.</p>
           </section>
           <section className="workspace upload-workspace" aria-label="Start a subtitle project">
             <div className="workspace-heading"><div><div className="section-kicker">01 <span>·</span> START WITH AUDIO</div><h2>Bring your audio</h2><p>Choose a voice track from your finished edit.</p></div><span className="step-pill">STEP 1 OF 3</span></div>
