@@ -34,7 +34,7 @@
 }
 
 .metal-button-cta:focus-visible {
-  outline: 3px solid #58a99b !important;
+  outline: 3px solid #0e8efa !important;
   outline-offset: 4px;
 }
 

@@ -2,9 +2,9 @@
   position: relative;
   width: 100%;
   overflow: hidden;
-  border-top: 1px solid #e9ece5;
-  border-bottom: 1px solid #e9ece5;
-  background: #f6f8f5;
+  border-top: 1px solid #e7edf4;
+  border-bottom: 1px solid #e7edf4;
+  background: #f6f8fc;
   -webkit-mask-image: linear-gradient(90deg, transparent 0, #000 4%, #000 96%, transparent 100%);
   mask-image: linear-gradient(90deg, transparent 0, #000 4%, #000 96%, transparent 100%);
 }
@@ -43,7 +43,7 @@
 }
 
 .marquee-item svg {
-  color: #398579;
+  color: #0e8efa;
   flex: 0 0 auto;
 }
 
@@ -52,7 +52,7 @@
   height: 5px;
   margin-left: clamp(12px, 2vw, 30px);
   border-radius: 50%;
-  background: #9ab9ac;
+  background: #b9dcff;
 }
 
 @keyframes sidecar-marquee {

@@ -28,7 +28,7 @@
 }
 
 .value-item strong {
-  color: #436e62;
+  color: #0a73d5;
   font: 600 9px var(--mono);
   letter-spacing: 0.075em;
 }
@@ -115,9 +115,9 @@
 }
 
 .footer-actions > .footer-social:hover {
-  border-color: #aabdb2;
-  background: #f0f5f1;
-  color: #1d5145;
+  border-color: #c5e1fb;
+  background: #f2f8ff;
+  color: #0a73d5;
 }
 
 .footer-social-mark {
