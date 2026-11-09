@@ -3,6 +3,26 @@
   margin-top: 8px;
 }
 
+.editor-title-row > div:first-child {
+  flex: 1;
+  min-width: 0;
+}
+
+.editor-title-row .editor-file-name {
+  max-width: 100%;
+  overflow: hidden;
+  margin: 0 14px 8px 0;
+  font-size: clamp(20px, 2.2vw, 26px);
+  line-height: 1.2;
+  letter-spacing: -.7px;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.editor-title-row .ready-pill {
+  flex: none;
+}
+
 .hero h1 .hero-title {
   width: 100%;
   justify-content: center;
@@ -84,6 +104,13 @@
   gap: 22px;
 }
 
+.footer-leading {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  min-width: 0;
+}
+
 .footer-meta,
 .footer-actions {
   display: flex;
@@ -109,25 +136,22 @@
 .footer-actions > .footer-social {
   display: inline-flex;
   align-items: center;
-  gap: 7px;
-  min-height: 36px;
-  padding: 7px 11px;
-  border: 1px solid #dfe3dc;
-  border-radius: 999px;
-  background: #fff;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  padding: 0;
+  border: 0;
+  border-radius: 50%;
+  background: transparent;
   color: #3e4942;
-  font-size: 11px;
-  font-weight: 600;
   line-height: 1;
   text-decoration: none;
-  white-space: nowrap;
-  transition: background-color 150ms ease-out, border-color 150ms ease-out, color 150ms ease-out;
+  transition: color 150ms ease-out, transform 150ms ease-out;
 }
 
 .footer-actions > .footer-social:hover {
-  border-color: #c5e1fb;
-  background: #f2f8ff;
   color: #0a73d5;
+  transform: translateY(-1px);
 }
 
 .footer-social-mark {
@@ -150,6 +174,24 @@
   display: inline-flex;
   flex: 0 0 auto;
   margin-left: auto;
+}
+
+.footer-star-wrap {
+  display: inline-flex;
+  flex: 0 0 auto;
+}
+
+.metal-button-cta.footer-star-button {
+  width: auto;
+  min-height: 32px;
+  padding: 6px 10px !important;
+  gap: 6px;
+  font-size: 10px !important;
+}
+
+.metal-button-cta.footer-star-button svg {
+  width: 14px;
+  height: 14px;
 }
 
 .progress-track.is-indeterminate > span {
@@ -223,6 +265,12 @@
   .footer-actions {
     width: 100%;
     justify-content: space-between;
+  }
+  .footer-leading {
+    width: 100%;
+    align-items: flex-start;
+    flex-direction: column;
+    gap: 8px;
   }
   .footer-meta { gap: 8px; }
   .footer-actions { gap: 14px; justify-content: flex-start; }

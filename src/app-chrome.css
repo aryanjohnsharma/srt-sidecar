@@ -56,8 +56,8 @@ html[data-theme="dark"] .ambient-layer{opacity:.18}
 .app-shell[data-theme="dark"] .floating-export-inner>span,.app-shell[data-theme="dark"] .site-footer,.app-shell[data-theme="dark"] .editor-footer{color:#b2bab2}
 .app-shell[data-theme="dark"] .site-footer{border-color:#39434c}
 .app-shell[data-theme="dark"] .footer-actions>a,.app-shell[data-theme="dark"] .footer-credit a,.app-shell[data-theme="dark"] .editor-footer button,.app-shell[data-theme="dark"] .recent-open{color:#add8ff}
-.app-shell[data-theme="dark"] .footer-actions>.footer-social{border-color:#454f58;background:#272d36;color:#dde5de}
-.app-shell[data-theme="dark"] .footer-actions>.footer-social:hover{border-color:#8eb3d9;background:#303b48;color:#fff}
+.app-shell[data-theme="dark"] .footer-actions>.footer-social{border-color:transparent;background:transparent;color:#dde5de}
+.app-shell[data-theme="dark"] .footer-actions>.footer-social:hover{border-color:transparent;background:transparent;color:#fff}
 .app-shell[data-theme="dark"] .benefit-marquee{background:#20252d;border-color:#39434c}
 .app-shell[data-theme="dark"] .marquee-item{color:#c0c7c0}
 .app-shell[data-theme="dark"] .marquee-item svg{color:#69b5ff}
