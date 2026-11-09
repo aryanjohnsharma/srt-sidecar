@@ -449,7 +449,7 @@ function App({ onReady }: { onReady?: () => void }) {
             <BlurText as="p" className="hero-copy" text="Choose how many words show at a time. Adjust when they appear, then export your SRT." effect="blur" animateBy="words" direction="bottom" staggerFrom="start" trigger="load" waitForEvent="sidecar-loader-complete" delay={28} stepDuration={0.34} blur={4} distance={12} />
           </section>
           <section className="workspace upload-workspace" aria-label="Start a subtitle project">
-            <div className="workspace-heading"><div><div className="section-kicker">01 <span>·</span> START WITH AUDIO</div><h2>Bring your audio</h2><p>Choose a voice track from your finished edit.</p></div><span className="step-pill">STEP 1 OF 3</span></div>
+            <div className="workspace-heading"><div><h2>Bring your audio</h2><p>Choose a voice track from your finished edit.</p></div><span className="step-pill">STEP 1 OF 3</span></div>
             <input ref={inputRef} type="file" accept="audio/*,.wav,.mp3,.m4a,.aac,.ogg,.flac" className="sr-only" onChange={(event) => { handleFileChange(event.target.files?.[0]); event.currentTarget.value = '' }} />
             {!file ? <button className={`dropzone ${dragging ? 'is-dragging' : ''}`} onClick={pick} onDragOver={(e) => { e.preventDefault(); setDragging(true) }} onDragLeave={() => setDragging(false)} onDrop={onDrop} aria-label="Choose or drop an audio file">
               <span className="upload-icon"><Upload size={22} /></span><span className="drop-title">Drop your audio here, or <span>browse files</span></span><span className="drop-meta">WAV, MP3, M4A, AAC <i /> UP TO 200 MB</span>
