@@ -426,7 +426,7 @@ function App({ onReady }: { onReady?: () => void }) {
 
   return (
     <>
-      {createPortal(<div className="ambient-layer" aria-hidden="true"><Dither waveSpeed={0.4} waveFrequency={1.6} waveAmplitude={0.3} waveColor={[0.055, 0.557, 0.98]} backgroundColor="transparent" colorNum={3} pixelSize={3} disableAnimation={reducedMotion} enableMouseInteraction={false} ditherMode="bayer4" scale={1.1} contrast={0.8} brightness={0.02} mouseEffect="ripple" mouseStrength={0.3} trail={0.25} clickRipple={false} /></div>, document.body)}
+      {createPortal(<div className="ambient-layer" aria-hidden="true"><Dither waveSpeed={0.4} waveFrequency={1.6} waveAmplitude={0.3} waveColor={[0.56, 0.64, 0.59]} backgroundColor="transparent" colorNum={3} pixelSize={3} disableAnimation={reducedMotion} enableMouseInteraction={false} ditherMode="bayer4" scale={1.1} contrast={0.8} brightness={0.02} mouseEffect="ripple" mouseStrength={0.3} trail={0.25} clickRipple={false} /></div>, document.body)}
       <div className={`app-shell${phase === 'review' ? ' has-floating-export' : ''}`} data-theme={theme}>
       <header className="topbar">
         <a href="#home" className="brand" aria-label="SRT Sidecar home" onClick={(event) => { event.preventDefault(); transitionPhase('upload'); setWords([]); setFile(null) }}>

@@ -39,6 +39,7 @@ function Root() {
     {showSplash && <div className={`loading-splash${leaving ? ' loading-splash-leaving' : ''}`} aria-hidden="true">
       <LiquidGlassLogo
         logo="/brand-logo.png"
+        logoColor="original"
         ending="logo"
         theme="light"
         style={{ height: '100dvh', width: '100vw', margin: 'auto' }}
