@@ -4,6 +4,7 @@ import { getCalApi } from '@calcom/embed-react'
 import { AudioLines, ArrowDownToLine, ArrowLeft, Check, ChevronDown, CircleHelp, FileAudio2, FileText, Gauge, Headphones, LockKeyhole, Pause, Play, Plus, RotateCcw, Settings2, ShieldCheck, Sparkles, Upload, Volume2, X } from './components/pika-ui-icons'
 import Dither from './components/Dither'
 import BlurText from './components/BlurText'
+import GlideSelect from './components/GlideSelect'
 import { MoonIcon, SquareInstagramIcon, SunsamaIcon, XTwitterIcon } from './components/brand-icons'
 import { buildCues, formatTimestamp, serializeSrt, validateCues, type Settings, type Word } from './lib/srt'
 import { clearProjects, deleteProject, listProjects, saveProject, type SavedProject } from './lib/projects'
@@ -456,9 +457,10 @@ function App({ onReady }: { onReady?: () => void }) {
             {file && file.size > 50 * 1024 * 1024 && <div className="large-file-note" role="status">Large audio can use substantial browser memory. Close other tabs or choose a shorter export if your device has limited memory.</div>}
             {error && <div className="error-note" role="alert">{error}</div>}
             <div className="setup-row">
-              <label className="language-select"><span>TRANSCRIPTION LANGUAGE</span><span className="select-wrap"><select value={language} onChange={(e) => setLanguage(e.target.value)}><option value="">Auto-detect</option><option value="english">English</option><option value="hindi">Hindi</option><option value="spanish">Spanish</option><option value="french">French</option><option value="german">German</option><option value="japanese">Japanese</option><option value="portuguese">Portuguese</option></select><ChevronDown size={15} /></span></label>
+              <div className="language-select"><span>TRANSCRIPTION LANGUAGE</span><GlideSelect className="language-glide-select" ariaLabel="Transcription language" value={language} onChange={(nextLanguage) => setLanguage(nextLanguage)} options={[{ value: '', label: 'Auto-detect' }, { value: 'english', label: 'English' }, { value: 'hindi', label: 'Hindi' }, { value: 'spanish', label: 'Spanish' }, { value: 'french', label: 'French' }, { value: 'german', label: 'German' }, { value: 'japanese', label: 'Japanese' }, { value: 'portuguese', label: 'Portuguese' }]} accentColor={theme === 'dark' ? '#0e8efa' : '#0a73d5'} surfaceColor={theme === 'dark' ? '#202420' : '#fff'} highlightColor={theme === 'dark' ? '#343b42' : '#eaf4ff'} textColor={theme === 'dark' ? '#e0e6df' : '#262925'} size="md" radius={9} menuWidth={186} placement="bottom" align="left" popDuration={180} glideDuration={220} rememberPosition />
+              </div>
               <div className="setup-divider" />
-              <div className="model-note"><span className="model-dot" /><div><strong>Whisper Base <small className="model-cache-status">{modelCacheStatus}</small></strong><span>Runs on your device · {modelCacheStatus === 'Cached' ? 'model cached when browser storage allows' : 'downloads on first use'}</span></div></div>
+              <div className="model-note"><span className="model-dot" /><div><strong>Local AI model <small className="model-cache-status">{modelCacheStatus === 'Cached' ? 'Downloaded' : modelCacheStatus === 'Not downloaded' ? 'Not downloaded' : modelCacheStatus === 'Checking' ? 'Checking' : modelCacheStatus === 'Downloading' ? 'Downloading' : modelCacheStatus === 'Preparing' ? 'Preparing' : modelCacheStatus === 'Unavailable' ? 'Status unavailable' : modelCacheStatus}</small></strong><span>{modelCacheStatus === 'Cached' ? 'Ready on this device' : 'Downloads the first time you transcribe'}</span></div></div>
             </div>
             <MetalButton variant="steel" wrapperClassName="metal-button-full" className="metal-button-cta start-button" disabled={!file} onClick={() => void transcribe()}>Transcribe audio <ArrowDownToLine size={16} className="button-arrow" /></MetalButton>
             <div className="upload-footnote"><LockKeyhole size={13} /> Your audio stays in your browser. Nothing is uploaded to a Sidecar server.</div>
