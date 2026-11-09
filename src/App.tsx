@@ -5,7 +5,6 @@ import { AudioLines, ArrowDownToLine, ArrowLeft, Check, ChevronDown, CircleHelp,
 import Dither from './components/Dither'
 import BlurText from './components/BlurText'
 import GlideSelect from './components/GlideSelect'
-import GradualBlur from './components/GradualBlur'
 import { MoonIcon, SquareInstagramIcon, SunsamaIcon, XTwitterIcon } from './components/brand-icons'
 import { buildCues, formatTimestamp, serializeSrt, validateCues, type Settings, type Word } from './lib/srt'
 import { clearProjects, deleteProject, listProjects, saveProject, type SavedProject } from './lib/projects'
@@ -536,8 +535,6 @@ function App({ onReady }: { onReady?: () => void }) {
           <MetalButton variant="steel" wrapperClassName="footer-book-wrap" className="metal-button-cta footer-book-button" type="button" data-cal-namespace="srt-sidecar-chat" data-cal-link="aryan-sharma-amw1me/srt-sidecar-chat" data-cal-config='{"layout":"month_view","useSlotsViewOnSmallScreen":"true"}' aria-label="Book a 15 minute SRT Sidecar chat"><Gauge size={13} /> Book a call</MetalButton>
         </div>
       </footer>
-      <GradualBlur position="top" target="parent" height="92px" strength={1.4} layers={8} curve="bezier" exponential tint="transparent" zIndex={2} className="page-edge-blur page-edge-blur-top" style={{ top: 'var(--site-header-height)' }} />
-      <GradualBlur position="bottom" target="parent" height="82px" strength={1.25} layers={8} curve="bezier" exponential tint="transparent" zIndex={2} className="page-edge-blur page-edge-blur-bottom" style={{ bottom: 'var(--site-footer-height)' }} />
       </div>
     </>
   )
