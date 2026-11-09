@@ -30,6 +30,10 @@ function Root() {
     return () => window.clearTimeout(timer)
   }, [minimumElapsed, appReady])
 
+  useEffect(() => {
+    if (!showSplash) window.dispatchEvent(new Event('sidecar-loader-complete'))
+  }, [showSplash])
+
   const handleAppReady = useCallback(() => {
     setAppReady(true)
   }, [])

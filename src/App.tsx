@@ -3,6 +3,7 @@ import { createPortal } from 'react-dom'
 import { getCalApi } from '@calcom/embed-react'
 import { AudioLines, ArrowDownToLine, ArrowLeft, Check, ChevronDown, CircleHelp, FileAudio2, FileText, Gauge, Headphones, LockKeyhole, Pause, Play, Plus, RotateCcw, Settings2, ShieldCheck, Sparkles, Upload, Volume2, X } from './components/pika-ui-icons'
 import Dither from './components/Dither'
+import BlurText from './components/BlurText'
 import { MoonIcon, SquareInstagramIcon, SunsamaIcon, XTwitterIcon } from './components/brand-icons'
 import { buildCues, formatTimestamp, serializeSrt, validateCues, type Settings, type Word } from './lib/srt'
 import { clearProjects, deleteProject, listProjects, saveProject, type SavedProject } from './lib/projects'
@@ -443,8 +444,8 @@ function App({ onReady }: { onReady?: () => void }) {
       <main className="main-content">
         {phase === 'upload' && <>
           <section className="hero">
-            <h1>Add word-timed subtitles to your edit.</h1>
-            <p className="hero-copy">Choose how many words show at a time. Adjust when they appear, then export your SRT.</p>
+            <h1><BlurText as="span" className="hero-title" text="Add word-timed subtitles to your edit." effect="blur" animateBy="words" direction="bottom" staggerFrom="start" trigger="load" waitForEvent="sidecar-loader-complete" delay={34} stepDuration={0.38} blur={5} distance={16} /></h1>
+            <BlurText as="p" className="hero-copy" text="Choose how many words show at a time. Adjust when they appear, then export your SRT." effect="blur" animateBy="words" direction="bottom" staggerFrom="start" trigger="load" waitForEvent="sidecar-loader-complete" delay={28} stepDuration={0.34} blur={4} distance={12} />
           </section>
           <section className="workspace upload-workspace" aria-label="Start a subtitle project">
             <div className="workspace-heading"><div><div className="section-kicker">01 <span>·</span> START WITH AUDIO</div><h2>Bring your audio</h2><p>Choose a voice track from your finished edit.</p></div><span className="step-pill">STEP 1 OF 3</span></div>

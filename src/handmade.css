@@ -3,6 +3,16 @@
   margin-top: 8px;
 }
 
+.hero h1 .hero-title {
+  width: 100%;
+  justify-content: center;
+  color: var(--ink);
+}
+
+.hero h1 .hero-title span {
+  color: inherit;
+}
+
 
 .value-row {
   max-width: 800px;
