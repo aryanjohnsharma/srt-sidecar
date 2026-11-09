@@ -444,7 +444,7 @@ function App({ onReady }: { onReady?: () => void }) {
         {phase === 'upload' && <>
           <section className="hero">
             <h1>Add word-timed subtitles to your edit.</h1>
-            <p className="hero-copy">Transcribe locally, edit each cue, and export an SRT.</p>
+            <p className="hero-copy">Choose how many words show at a time. Adjust when they appear, then export your SRT.</p>
           </section>
           <section className="workspace upload-workspace" aria-label="Start a subtitle project">
             <div className="workspace-heading"><div><div className="section-kicker">01 <span>·</span> START WITH AUDIO</div><h2>Bring your audio</h2><p>Choose a voice track from your finished edit.</p></div><span className="step-pill">STEP 1 OF 3</span></div>
