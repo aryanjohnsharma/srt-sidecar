@@ -9,14 +9,15 @@ html[data-theme-transitioning]::view-transition-old(root){animation:none}
 html[data-theme-transitioning]::view-transition-new(root){animation:theme-color-splash 780ms cubic-bezier(.2,.72,.22,1) both}
 @keyframes theme-color-splash{from{clip-path:circle(0 at var(--theme-switch-x,50vw) var(--theme-switch-y,50vh))}to{clip-path:circle(150vmax at var(--theme-switch-x,50vw) var(--theme-switch-y,50vh))}}
 .theme-switching body,.theme-switching .app-shell,.theme-switching .topbar,.theme-switching .workspace,.theme-switching .recent-projects,.theme-switching .settings-panel,.theme-switching .transcript-card,.theme-switching .cue-list,.theme-switching .timing-editor,.theme-switching .audio-card,.theme-switching .benefit-marquee{transition:background-color 600ms ease-in-out,color 600ms ease-in-out,border-color 600ms ease-in-out}
-.app-shell{position:relative;isolation:isolate}
+.app-shell{position:relative;z-index:1;isolation:isolate}
 .app-shell.has-floating-export{padding-bottom:100px}
 @media(min-width:1024px){.app-shell{width:90.9091%;min-height:90.9091vh;margin-inline:auto;zoom:1.1}}
 @media(min-width:1024px){.app-shell>.topbar{width:110%;margin-left:-4.54545vw;margin-right:0}}
-.ambient-layer{position:fixed;inset:0;z-index:0;overflow:hidden;pointer-events:none;opacity:.23}
+.ambient-layer{position:fixed;inset:0;z-index:0;overflow:hidden;pointer-events:none;opacity:.23;transition:filter 780ms ease-in-out,opacity 780ms ease-in-out}
 .ambient-layer>div{position:absolute!important;inset:0}
 .ambient-layer canvas{width:100%;height:100%}
-.app-shell[data-theme="light"] .ambient-layer{filter:brightness(.92)}
+html[data-theme="light"] .ambient-layer{filter:brightness(.92)}
+#root{background:transparent}
 .topbar{position:sticky;top:0;z-index:30;width:100%;height:72px;margin:0 auto;background:#fbfbf9;border-bottom:1px solid var(--line)}
 .header-metal-wrap{display:inline-flex;flex:0 0 auto}
 .metal-button-cta.header-metal-button{height:30px!important;min-height:30px!important;padding:4px 9px!important;gap:5px;font-size:10px!important;line-height:1!important}
@@ -34,8 +35,8 @@ html[data-theme-transitioning]::view-transition-new(root){animation:theme-color-
 @media(prefers-reduced-motion:reduce){html:not([data-motion="full"]) .theme-switching .app-shell,html:not([data-motion="full"])::view-transition-old(root),html:not([data-motion="full"])::view-transition-new(root){animation:none!important}}
 
 html[data-theme="dark"],html[data-theme="dark"] body{background:#171a18;color:#edf0eb}
-.app-shell[data-theme="dark"]{--ink:#edf0eb;--muted:#a3aaa2;--line:#39403a;--paper:#222723;--accent:#83b8a8;--accent-dark:#a1d0c1;background:#171a18;color:#edf0eb}
-.app-shell[data-theme="dark"] .ambient-layer{opacity:.18}
+.app-shell[data-theme="dark"]{--ink:#edf0eb;--muted:#a3aaa2;--line:#39403a;--paper:#222723;--accent:#83b8a8;--accent-dark:#a1d0c1;background:transparent;color:#edf0eb}
+html[data-theme="dark"] .ambient-layer{opacity:.18}
 .app-shell[data-theme="dark"] .topbar,.app-shell[data-theme="dark"] .floating-export{background:#202521;border-color:#39403a}
 .app-shell[data-theme="dark"] .brand-mark{background:#293b34;color:#a3d4c3}
 .app-shell[data-theme="dark"] .brand-name span,.app-shell[data-theme="dark"] .topbar-center,.app-shell[data-theme="dark"] .topbar-link,.app-shell[data-theme="dark"] .topbar-author{color:#c0c7c0}

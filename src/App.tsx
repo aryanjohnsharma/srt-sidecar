@@ -1,4 +1,5 @@
 import { useCallback, useEffect, useMemo, useRef, useState, type DragEvent, type MouseEvent } from 'react'
+import { createPortal } from 'react-dom'
 import { getCalApi } from '@calcom/embed-react'
 import { AudioLines, ArrowDownToLine, ArrowLeft, Check, ChevronDown, CircleHelp, FileAudio2, FileText, Gauge, Headphones, LockKeyhole, Pause, Play, Plus, RotateCcw, Settings2, ShieldCheck, Sparkles, Upload, Volume2, X } from './components/pika-ui-icons'
 import Dither from './components/Dither'
@@ -424,8 +425,9 @@ function App({ onReady }: { onReady?: () => void }) {
   const onDrop = useCallback((event: DragEvent) => { event.preventDefault(); setDragging(false); acceptFile(event.dataTransfer.files[0]) }, [])
 
   return (
-    <div className={`app-shell${phase === 'review' ? ' has-floating-export' : ''}`} data-theme={theme}>
-      <div className="ambient-layer" aria-hidden="true"><Dither waveSpeed={0.4} waveFrequency={1.6} waveAmplitude={0.3} waveColor={[0.56, 0.64, 0.59]} backgroundColor="transparent" colorNum={3} pixelSize={3} disableAnimation={reducedMotion} enableMouseInteraction={false} ditherMode="bayer4" scale={1.1} contrast={0.8} brightness={0.02} mouseEffect="ripple" mouseStrength={0.3} trail={0.25} clickRipple={false} /></div>
+    <>
+      {createPortal(<div className="ambient-layer" aria-hidden="true"><Dither waveSpeed={0.4} waveFrequency={1.6} waveAmplitude={0.3} waveColor={[0.56, 0.64, 0.59]} backgroundColor="transparent" colorNum={3} pixelSize={3} disableAnimation={reducedMotion} enableMouseInteraction={false} ditherMode="bayer4" scale={1.1} contrast={0.8} brightness={0.02} mouseEffect="ripple" mouseStrength={0.3} trail={0.25} clickRipple={false} /></div>, document.body)}
+      <div className={`app-shell${phase === 'review' ? ' has-floating-export' : ''}`} data-theme={theme}>
       <header className="topbar">
         <a href="#home" className="brand" aria-label="SRT Sidecar home" onClick={(event) => { event.preventDefault(); transitionPhase('upload'); setWords([]); setFile(null) }}>
           <span className="brand-mark"><AudioLines size={19} strokeWidth={2.2} /></span>
@@ -530,7 +532,8 @@ function App({ onReady }: { onReady?: () => void }) {
           <MetalButton variant="steel" wrapperClassName="footer-book-wrap" className="metal-button-cta footer-book-button" type="button" data-cal-namespace="srt-sidecar-chat" data-cal-link="aryan-sharma-amw1me/srt-sidecar-chat" data-cal-config='{"layout":"month_view","useSlotsViewOnSmallScreen":"true"}' aria-label="Book a 15 minute SRT Sidecar chat"><Gauge size={13} /> Book a call</MetalButton>
         </div>
       </footer>
-    </div>
+      </div>
+    </>
   )
 }
 
