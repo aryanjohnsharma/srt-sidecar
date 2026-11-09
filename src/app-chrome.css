@@ -39,6 +39,8 @@ html[data-theme="dark"],html[data-theme="dark"] body{background:#171a20;color:#e
 .app-shell[data-theme="dark"]{--ink:#edf0eb;--muted:#a3aaa2;--line:#39434c;--paper:#222831;--accent:#69b5ff;--accent-dark:#add8ff;background:transparent;color:#edf0eb}
 html[data-theme="dark"] .ambient-layer{opacity:.18}
 .app-shell[data-theme="dark"] .topbar,.app-shell[data-theme="dark"] .floating-export{background:#20252d;border-color:#39434c}
+.app-shell[data-theme="dark"] .topbar-pill{background:#20252d;border-color:#39434c;box-shadow:0 2px 8px #0002}
+.app-shell[data-theme="dark"] .topbar-pill-divider{background:#39434c}
 .app-shell[data-theme="dark"] .brand-mark{background:#26394b;color:#b6dcff}
 .app-shell[data-theme="dark"] .brand-name span,.app-shell[data-theme="dark"] .topbar-center,.app-shell[data-theme="dark"] .topbar-link,.app-shell[data-theme="dark"] .topbar-author{color:#c0c7c0}
 .app-shell[data-theme="dark"] .hero h1,.app-shell[data-theme="dark"] .editor-title-row h1,.app-shell[data-theme="dark"] .workspace-heading h2,.app-shell[data-theme="dark"] .workspace-heading p,.app-shell[data-theme="dark"] .workspace{color:#edf0eb}

@@ -1,11 +1,11 @@
 import { useCallback, useEffect, useMemo, useRef, useState, type DragEvent, type MouseEvent } from 'react'
 import { createPortal } from 'react-dom'
 import { getCalApi } from '@calcom/embed-react'
-import { AudioLines, ArrowDownToLine, ArrowLeft, Check, ChevronDown, CircleHelp, FileAudio2, FileText, Gauge, Headphones, LockKeyhole, Pause, Play, Plus, RotateCcw, Settings2, Sparkles, Upload, Volume2, X } from './components/pika-ui-icons'
+import { AudioLines, ArrowDownToLine, ArrowLeft, Check, ChevronDown, CircleHelp, FileAudio2, FileText, Gauge, GitHub, Headphones, Instagram, LockKeyhole, Pause, Play, Plus, PortfolioIcon, RotateCcw, Settings2, Sparkles, Upload, Volume2, X, XBrand } from './components/pika-ui-icons'
 import Dither from './components/Dither'
 import BlurText from './components/BlurText'
 import GlideSelect from './components/GlideSelect'
-import { MoonIcon, SquareInstagramIcon, SunsamaIcon, XTwitterIcon } from './components/brand-icons'
+import { MoonIcon, SunsamaIcon } from './components/brand-icons'
 import { buildCues, formatTimestamp, serializeSrt, validateCues, type Settings, type Word } from './lib/srt'
 import { clearProjects, deleteProject, listProjects, saveProject, type SavedProject } from './lib/projects'
 import { MetalButton } from './components/metal-button'
@@ -52,6 +52,7 @@ function App({ onReady }: { onReady?: () => void }) {
   const [installPrompt, setInstallPrompt] = useState<InstallPrompt | null>(null)
   const [modelCacheStatus, setModelCacheStatus] = useState('Checking')
   const [theme, setTheme] = useState<'light' | 'dark'>(() => window.localStorage.getItem('srt-sidecar-theme') === 'dark' ? 'dark' : 'light')
+  const [githubStars, setGithubStars] = useState<number | null>(null)
   const audioRef = useRef<HTMLAudioElement>(null)
   const workerRef = useRef<Worker | null>(null)
   const jobSequenceRef = useRef(0)
@@ -114,6 +115,30 @@ function App({ onReady }: { onReady?: () => void }) {
     return () => window.clearInterval(interval)
   }, [phase])
   useEffect(() => { projectsRef.current = projects }, [projects])
+  useEffect(() => {
+    let cancelled = false
+    const cacheKey = 'srt-sidecar-github-stars'
+    const cacheDuration = 6 * 60 * 60 * 1000
+    let cachedAt = 0
+    try {
+      const cached = JSON.parse(window.localStorage.getItem(cacheKey) || 'null') as { count?: number; fetchedAt?: number } | null
+      if (cached && Number.isInteger(cached.count) && Number.isFinite(cached.fetchedAt)) {
+        setGithubStars(cached.count as number)
+        cachedAt = cached.fetchedAt as number
+      }
+    } catch { /* Storage can be unavailable; the public API remains usable. */ }
+    if (cachedAt && Date.now() - cachedAt < cacheDuration) return () => { cancelled = true }
+    void fetch('https://api.github.com/repos/aryanjohnsharma/srt-sidecar', { headers: { Accept: 'application/vnd.github+json' } })
+      .then((response) => { if (!response.ok) throw new Error('GitHub stars unavailable'); return response.json() as Promise<{ stargazers_count?: number }> })
+      .then((repository) => {
+        if (cancelled || !Number.isInteger(repository.stargazers_count)) return
+        const count = repository.stargazers_count as number
+        setGithubStars(count)
+        try { window.localStorage.setItem(cacheKey, JSON.stringify({ count, fetchedAt: Date.now() })) } catch { /* The count is still shown for this visit. */ }
+      })
+      .catch(() => {})
+    return () => { cancelled = true }
+  }, [])
   useEffect(() => {
     let cancelled = false
     void (async () => {
@@ -424,14 +449,19 @@ function App({ onReady }: { onReady?: () => void }) {
       {createPortal(<div className="ambient-layer" aria-hidden="true"><Dither waveSpeed={0.4} waveFrequency={1.6} waveAmplitude={0.3} waveColor={[0.56, 0.64, 0.59]} backgroundColor="transparent" colorNum={3} pixelSize={3} disableAnimation={reducedMotion} enableMouseInteraction={false} ditherMode="bayer4" scale={1.1} contrast={0.8} brightness={0.02} mouseEffect="ripple" mouseStrength={0.3} trail={0.25} clickRipple={false} /></div>, document.body)}
       <div className={`app-shell${phase === 'review' ? ' has-floating-export' : ''}`} data-theme={theme}>
       <header className="topbar">
-        <a href="#home" className="brand" aria-label="SRT Sidecar home" onClick={(event) => { event.preventDefault(); transitionPhase('upload'); setWords([]); setFile(null) }}>
-          <img className="brand-logo" src="/brand-logo.png" alt="" />
+        <button type="button" className="brand" aria-label="SRT Sidecar home" onClick={() => { transitionPhase('upload'); setWords([]); setFile(null) }} onContextMenu={(event) => event.preventDefault()}>
+          <img className="brand-logo" src="/brand-logo.png" alt="" draggable={false} />
           <span className="brand-name">srt<span>sidecar</span></span>
-        </a>
+        </button>
         <div className="topbar-actions">
-          <a className="topbar-author" href="https://aryanjohnsharma.github.io/" target="_blank" rel="noreferrer noopener">by @aryanjohnsharma</a>
-          {installPrompt ? <MetalButton variant="steel" wrapperClassName="header-metal-wrap" className="metal-button-cta header-metal-button" type="button" onClick={() => void installApp()}>Install app <ArrowDownToLine size={14} /></MetalButton> : <a className="topbar-link" href="#how-it-works" onClick={(e) => { e.preventDefault(); document.getElementById('how-it-works')?.scrollIntoView({ behavior: 'smooth' }) }}><CircleHelp size={15} /> How it works</a>}
-          <MetalButton variant="steel" wrapperClassName="header-metal-wrap" className="metal-button-cta header-metal-button" type="button" aria-label={`Switch to ${theme === 'light' ? 'dark' : 'light'} theme`} aria-pressed={theme === 'dark'} onClick={switchTheme}><span aria-hidden="true">{theme === 'light' ? <MoonIcon /> : <SunsamaIcon />}</span><span>{theme === 'light' ? 'Dark' : 'Light'}</span></MetalButton>
+          <div className="topbar-pill">
+            <a className="topbar-author" href="https://aryanjohnsharma.github.io/" target="_blank" rel="noreferrer noopener"><PortfolioIcon size={15} /><span>by @aryanjohnsharma</span></a>
+            <span className="topbar-pill-divider" aria-hidden="true" />
+            <a className="topbar-link" aria-label="How it works" href="#how-it-works" onClick={(e) => { e.preventDefault(); document.getElementById('how-it-works')?.scrollIntoView({ behavior: 'smooth' }) }}><CircleHelp size={15} /> How it works</a>
+            <span className="topbar-pill-divider" aria-hidden="true" />
+            <MetalButton variant="steel" wrapperClassName="header-metal-wrap header-theme-wrap" className="metal-button-cta header-metal-button header-theme-button" type="button" aria-label={`Switch to ${theme === 'light' ? 'dark' : 'light'} theme`} aria-pressed={theme === 'dark'} onClick={switchTheme}><span aria-hidden="true">{theme === 'light' ? <MoonIcon /> : <SunsamaIcon />}</span></MetalButton>
+          </div>
+          {installPrompt && <MetalButton variant="steel" wrapperClassName="header-metal-wrap" className="metal-button-cta header-metal-button header-install-button" type="button" onClick={() => void installApp()}>Install app <ArrowDownToLine size={14} /></MetalButton>}
         </div>
       </header>
 
@@ -513,18 +543,50 @@ function App({ onReady }: { onReady?: () => void }) {
         </>}
       </main>
       <footer className="site-footer">
-        <div className="footer-leading">
-          <MetalButton variant="steel" wrapperClassName="footer-star-wrap" className="metal-button-cta footer-star-button" type="button" aria-label="Open SRT Sidecar on GitHub to star it" onClick={() => window.open('https://github.com/aryanjohnsharma/srt-sidecar', '_blank', 'noopener,noreferrer')}>
-            <svg aria-hidden="true" viewBox="0 0 24 24" fill="currentColor"><path d="M12 .75a11.25 11.25 0 0 0-3.56 21.92c.56.1.77-.24.77-.54v-1.9c-3.14.68-3.8-1.33-3.8-1.33-.51-1.3-1.25-1.65-1.25-1.65-1.02-.7.08-.69.08-.69 1.13.08 1.73 1.16 1.73 1.16 1.01 1.73 2.65 1.23 3.3.94.1-.73.4-1.23.72-1.52-2.5-.28-5.13-1.25-5.13-5.55 0-1.23.44-2.23 1.16-3.02-.12-.29-.5-1.44.11-2.99 0 0 .95-.3 3.1 1.15a10.8 10.8 0 0 1 5.65 0c2.15-1.45 3.1-1.15 3.1-1.15.62 1.55.23 2.7.12 2.99.72.79 1.16 1.79 1.16 3.02 0 4.31-2.64 5.26-5.16 5.54.4.35.76 1.02.76 2.06v3.05c0 .3.2.65.77.54A11.25 11.25 0 0 0 12 .75Z" /></svg>
-            Star on GitHub
-          </MetalButton>
+        <div className="footer-layout">
+          <section className="footer-brand-card" aria-label="SRT Sidecar">
+            <div className="footer-brand-heading">
+              <span className="footer-logo-frame"><img src="/brand-logo.png" alt="" draggable={false} /></span>
+              <span className="footer-brand-name">srt<span>sidecar</span></span>
+            </div>
+            <p className="footer-brand-tagline">Word-timed subtitles for your finished edit.</p>
+            <div className="footer-brand-bottom">
+              <a className="footer-portfolio-link" href="https://aryanjohnsharma.github.io/" target="_blank" rel="noreferrer noopener">Shipped by <strong>@aryanjohnsharma</strong></a>
+            </div>
+          </section>
+          <section className="footer-info-card" aria-label="More about SRT Sidecar">
+            <div className="footer-link-columns">
+              <nav className="footer-link-group" aria-label="Navigation">
+                <h3>Navigation</h3>
+                <a href="#how-it-works" onClick={(event) => { event.preventDefault(); document.getElementById('how-it-works')?.scrollIntoView({ behavior: 'smooth' }) }}>How it works</a>
+                <button type="button" onClick={useSample}>Try the sample</button>
+                <button type="button" onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}>Back to top</button>
+              </nav>
+              <nav className="footer-link-group footer-link-group-links" aria-label="Links">
+                <h3>Links</h3>
+                <a href="https://github.com/aryanjohnsharma/srt-sidecar" target="_blank" rel="noreferrer noopener"><GitHub size={15} /> GitHub</a>
+                <a href="https://aryanjohnsharma.github.io/" target="_blank" rel="noreferrer noopener"><PortfolioIcon size={15} /> Portfolio</a>
+                <a href="https://x.com/aryanjohnsharma" target="_blank" rel="noreferrer noopener"><XBrand size={15} /> X</a>
+                <a href="https://www.instagram.com/aryanjohnsharma/" target="_blank" rel="noreferrer noopener"><Instagram size={15} /> Instagram</a>
+              </nav>
+            </div>
+            <div className="footer-logo-sticker" aria-hidden="true"><img src="/brand-logo.png" alt="" draggable={false} /></div>
+            <div className="footer-info-cta">
+              <div className="footer-cta-buttons">
+                <div className="footer-github-action">
+                  {githubStars !== null && <span className="footer-star-count" aria-label={`${githubStars} GitHub stars`}><svg aria-hidden="true" viewBox="0 0 24 24" fill="currentColor"><path d="m12 2 2.9 6 6.6.9-4.8 4.7 1.1 6.6-5.8-3.1-5.8 3.1 1.1-6.6-4.8-4.7 6.6-.9L12 2Z" /></svg>{githubStars} stars</span>}
+                  <MetalButton variant="steel" wrapperClassName="footer-star-wrap" className="metal-button-cta footer-star-button" type="button" aria-label="Open SRT Sidecar on GitHub to star it" onClick={() => window.open('https://github.com/aryanjohnsharma/srt-sidecar', '_blank', 'noopener,noreferrer')}>
+                    <svg aria-hidden="true" viewBox="0 0 24 24" fill="currentColor"><path d="M12 .75a11.25 11.25 0 0 0-3.56 21.92c.56.1.77-.24.77-.54v-1.9c-3.14.68-3.8-1.33-3.8-1.33-.51-1.3-1.25-1.65-1.25-1.65-1.02-.7.08-.69.08-.69 1.13.08 1.73 1.16 1.73 1.16 1.01 1.73 2.65 1.23 3.3.94.1-.73.4-1.23.72-1.52-2.5-.28-5.13-1.25-5.13-5.55 0-1.23.44-2.23 1.16-3.02-.12-.29-.5-1.44.11-2.99 0 0 .95-.3 3.1 1.15a10.8 10.8 0 0 1 5.65 0c2.15-1.45 3.1-1.15 3.1-1.15.62 1.55.23 2.7.12 2.99.72.79 1.16 1.79 1.16 3.02 0 4.31-2.64 5.26-5.16 5.54.4.35.76 1.02.76 2.06v3.05c0 .3.2.65.77.54A11.25 11.25 0 0 0 12 .75Z" /></svg>
+                    Star on GitHub
+                  </MetalButton>
+                </div>
+                <MetalButton variant="steel" wrapperClassName="footer-book-wrap" className="metal-button-cta footer-book-button" type="button" data-cal-namespace="srt-sidecar-chat" data-cal-link="aryan-sharma-amw1me/srt-sidecar-chat" data-cal-config='{"layout":"month_view","useSlotsViewOnSmallScreen":"true"}' aria-label="Book a 15 minute SRT Sidecar chat"><Gauge size={13} /> Book a call</MetalButton>
+              </div>
+            </div>
+          </section>
         </div>
-        <div className="footer-meta"><span>© 2026 SRT SIDECAR</span><span className="footer-credit">SHIPPED BY <a href="https://aryanjohnsharma.github.io/" target="_blank" rel="noreferrer noopener">@aryanjohnsharma</a></span></div>
-        <div className="footer-actions">
-          <a className="footer-social" href="https://x.com/aryanjohnsharma" target="_blank" rel="noreferrer noopener" aria-label="Follow Aryan on X"><span className="footer-social-mark" aria-hidden="true"><XTwitterIcon /></span></a>
-          <a className="footer-social" href="https://www.instagram.com/aryanjohnsharma/" target="_blank" rel="noreferrer noopener" aria-label="Follow Aryan on Instagram"><span className="footer-social-mark" aria-hidden="true"><SquareInstagramIcon /></span></a>
-          <MetalButton variant="steel" wrapperClassName="footer-book-wrap" className="metal-button-cta footer-book-button" type="button" data-cal-namespace="srt-sidecar-chat" data-cal-link="aryan-sharma-amw1me/srt-sidecar-chat" data-cal-config='{"layout":"month_view","useSlotsViewOnSmallScreen":"true"}' aria-label="Book a 15 minute SRT Sidecar chat"><Gauge size={13} /> Book a call</MetalButton>
-        </div>
+        <div className="footer-bottom"><span>© 2026 SRT SIDECAR · SHIPPED BY <a href="https://aryanjohnsharma.github.io/" target="_blank" rel="noreferrer noopener">@aryanjohnsharma</a></span></div>
+        <span className="footer-watermark" aria-hidden="true">SRT SIDECAR</span>
       </footer>
       </div>
     </>
