@@ -101,6 +101,8 @@
 }
 
 .site-footer {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr);
   gap: 22px;
 }
 
@@ -109,6 +111,7 @@
   align-items: center;
   gap: 16px;
   min-width: 0;
+  justify-self: start;
 }
 
 .footer-meta,
@@ -119,10 +122,13 @@
 
 .footer-meta {
   gap: 18px;
+  justify-self: center;
+  white-space: nowrap;
 }
 
 .footer-actions {
-  gap: 18px;
+  gap: 11px;
+  justify-self: end;
 }
 
 .footer-actions > a {
@@ -137,8 +143,8 @@
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  width: 32px;
-  height: 32px;
+  width: 28px;
+  height: 28px;
   padding: 0;
   border: 0;
   border-radius: 50%;
@@ -173,7 +179,7 @@
 .footer-book-wrap {
   display: inline-flex;
   flex: 0 0 auto;
-  margin-left: auto;
+  margin-left: 0;
 }
 
 .footer-star-wrap {
@@ -187,11 +193,15 @@
   padding: 6px 10px !important;
   gap: 6px;
   font-size: 10px !important;
+  color: #000 !important;
+  -webkit-text-fill-color: #000 !important;
 }
 
 .metal-button-cta.footer-star-button svg {
   width: 14px;
   height: 14px;
+  color: #000 !important;
+  fill: #000 !important;
 }
 
 .progress-track.is-indeterminate > span {
@@ -257,6 +267,7 @@
 @media (max-width: 620px) {
   .topbar-author { display: none; }
   .site-footer {
+    display: flex;
     align-items: flex-start;
     flex-direction: column;
     gap: 13px;
@@ -272,7 +283,7 @@
     flex-direction: column;
     gap: 8px;
   }
-  .footer-meta { gap: 8px; }
-  .footer-actions { gap: 14px; justify-content: flex-start; }
+  .footer-meta { gap: 8px; justify-content: center; }
+  .footer-actions { gap: 10px; justify-content: flex-start; }
 }
 

@@ -8,7 +8,7 @@ html[data-theme-transitioning] .editor-main{view-transition-name:none!important}
 html[data-theme-transitioning]::view-transition-old(root){animation:none}
 html[data-theme-transitioning]::view-transition-new(root){animation:theme-color-splash 780ms cubic-bezier(.2,.72,.22,1) both}
 @keyframes theme-color-splash{from{clip-path:circle(0 at var(--theme-switch-x,50vw) var(--theme-switch-y,50vh))}to{clip-path:circle(150vmax at var(--theme-switch-x,50vw) var(--theme-switch-y,50vh))}}
-.theme-switching body,.theme-switching .app-shell,.theme-switching .topbar,.theme-switching .workspace,.theme-switching .recent-projects,.theme-switching .settings-panel,.theme-switching .transcript-card,.theme-switching .cue-list,.theme-switching .timing-editor,.theme-switching .audio-card,.theme-switching .benefit-marquee{transition:background-color 600ms ease-in-out,color 600ms ease-in-out,border-color 600ms ease-in-out}
+.theme-switching body,.theme-switching .app-shell,.theme-switching .topbar,.theme-switching .workspace,.theme-switching .recent-projects,.theme-switching .settings-panel,.theme-switching .transcript-card,.theme-switching .cue-list,.theme-switching .timing-editor,.theme-switching .audio-card{transition:background-color 600ms ease-in-out,color 600ms ease-in-out,border-color 600ms ease-in-out}
 .app-shell{position:relative;z-index:1;isolation:isolate}
 .app-shell.has-floating-export{padding-bottom:100px}
 @media(min-width:1024px){.app-shell{width:90.9091%;min-height:90.9091vh;margin-inline:auto;zoom:1.1}}
@@ -58,10 +58,6 @@ html[data-theme="dark"] .ambient-layer{opacity:.18}
 .app-shell[data-theme="dark"] .footer-actions>a,.app-shell[data-theme="dark"] .footer-credit a,.app-shell[data-theme="dark"] .editor-footer button,.app-shell[data-theme="dark"] .recent-open{color:#add8ff}
 .app-shell[data-theme="dark"] .footer-actions>.footer-social{border-color:transparent;background:transparent;color:#dde5de}
 .app-shell[data-theme="dark"] .footer-actions>.footer-social:hover{border-color:transparent;background:transparent;color:#fff}
-.app-shell[data-theme="dark"] .benefit-marquee{background:#20252d;border-color:#39434c}
-.app-shell[data-theme="dark"] .marquee-item{color:#c0c7c0}
-.app-shell[data-theme="dark"] .marquee-item svg{color:#69b5ff}
-.app-shell[data-theme="dark"] .marquee-item i{background:#617b96}
 .app-shell[data-theme="dark"] .floating-export-inner>span strong,.app-shell[data-theme="dark"] .bottom-count{color:#add8ff}
 .app-shell[data-theme="dark"] .metal-button-cta{color:#182126}
 .app-shell[data-theme="dark"] .error-note,.app-shell[data-theme="dark"] .validation-note,.app-shell[data-theme="dark"] .large-file-note,.app-shell[data-theme="dark"] .audio-missing{background:#332c24;border-color:#66543d;color:#f0d8aa}

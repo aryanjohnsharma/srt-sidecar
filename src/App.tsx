@@ -1,7 +1,7 @@
 import { useCallback, useEffect, useMemo, useRef, useState, type DragEvent, type MouseEvent } from 'react'
 import { createPortal } from 'react-dom'
 import { getCalApi } from '@calcom/embed-react'
-import { AudioLines, ArrowDownToLine, ArrowLeft, Check, ChevronDown, CircleHelp, FileAudio2, FileText, Gauge, Headphones, LockKeyhole, Pause, Play, Plus, RotateCcw, Settings2, ShieldCheck, Sparkles, Upload, Volume2, X } from './components/pika-ui-icons'
+import { AudioLines, ArrowDownToLine, ArrowLeft, Check, ChevronDown, CircleHelp, FileAudio2, FileText, Gauge, Headphones, LockKeyhole, Pause, Play, Plus, RotateCcw, Settings2, Sparkles, Upload, Volume2, X } from './components/pika-ui-icons'
 import Dither from './components/Dither'
 import BlurText from './components/BlurText'
 import GlideSelect from './components/GlideSelect'
@@ -12,7 +12,6 @@ import { MetalButton } from './components/metal-button'
 import './project-ui.css'
 import './metal-button.css'
 import './motion.css'
-import './marquee.css'
 import './handmade.css'
 
 type Phase = 'upload' | 'transcribing' | 'review'
@@ -22,14 +21,6 @@ const demoWords: Word[] = [
   ['They', 3.46, 3.73], ['start', 3.73, 4.08], ['with', 4.08, 4.3], ['one', 4.3, 4.57], ['small', 4.57, 4.92], ['step.', 4.92, 5.47],
   ['Make', 5.91, 6.26], ['something', 6.26, 6.8], ['today.', 6.8, 7.22],
 ].map(([text, start, end], i) => ({ id: `demo-${i}`, text: String(text), start: Number(start), end: Number(end) }))
-const marqueeItems = [
-  { text: 'CUSTOM WORDS PER CUE', Icon: AudioLines },
-  { text: 'TIMED TO YOUR AUDIO', Icon: Sparkles },
-  { text: 'EDIT EVERY WORD', Icon: FileText },
-  { text: 'PRIVATE ON YOUR DEVICE', Icon: LockKeyhole },
-  { text: 'READY FOR YOUR EDIT', Icon: ShieldCheck },
-]
-
 function App({ onReady }: { onReady?: () => void }) {
   const [phase, setPhase] = useState<Phase>('upload')
   const [file, setFile] = useState<File | null>(null)
@@ -521,22 +512,14 @@ function App({ onReady }: { onReady?: () => void }) {
           </div>
         </>}
       </main>
-      <section className="benefit-marquee" aria-label="How SRT Sidecar helps">
-        <p className="sr-only">Word-timed subtitles, editable one word at a time, private on your device, and ready for your video editor.</p>
-        <div className="marquee-track" aria-hidden="true">
-          {[0, 1].map((copy) => <div className="marquee-group" key={copy}>
-            {marqueeItems.map(({ text, Icon }) => <span className="marquee-item" key={text}><Icon size={16} strokeWidth={1.7} /><span>{text}</span><i /></span>)}
-          </div>)}
-        </div>
-      </section>
       <footer className="site-footer">
         <div className="footer-leading">
           <MetalButton variant="steel" wrapperClassName="footer-star-wrap" className="metal-button-cta footer-star-button" type="button" aria-label="Open SRT Sidecar on GitHub to star it" onClick={() => window.open('https://github.com/aryanjohnsharma/srt-sidecar', '_blank', 'noopener,noreferrer')}>
             <svg aria-hidden="true" viewBox="0 0 24 24" fill="currentColor"><path d="M12 .75a11.25 11.25 0 0 0-3.56 21.92c.56.1.77-.24.77-.54v-1.9c-3.14.68-3.8-1.33-3.8-1.33-.51-1.3-1.25-1.65-1.25-1.65-1.02-.7.08-.69.08-.69 1.13.08 1.73 1.16 1.73 1.16 1.01 1.73 2.65 1.23 3.3.94.1-.73.4-1.23.72-1.52-2.5-.28-5.13-1.25-5.13-5.55 0-1.23.44-2.23 1.16-3.02-.12-.29-.5-1.44.11-2.99 0 0 .95-.3 3.1 1.15a10.8 10.8 0 0 1 5.65 0c2.15-1.45 3.1-1.15 3.1-1.15.62 1.55.23 2.7.12 2.99.72.79 1.16 1.79 1.16 3.02 0 4.31-2.64 5.26-5.16 5.54.4.35.76 1.02.76 2.06v3.05c0 .3.2.65.77.54A11.25 11.25 0 0 0 12 .75Z" /></svg>
             Star on GitHub
           </MetalButton>
-          <div className="footer-meta"><span>© 2026 SRT SIDECAR</span><span className="footer-credit">SHIPPED BY <a href="https://aryanjohnsharma.github.io/" target="_blank" rel="noreferrer noopener">@aryanjohnsharma</a></span></div>
         </div>
+        <div className="footer-meta"><span>© 2026 SRT SIDECAR</span><span className="footer-credit">SHIPPED BY <a href="https://aryanjohnsharma.github.io/" target="_blank" rel="noreferrer noopener">@aryanjohnsharma</a></span></div>
         <div className="footer-actions">
           <a className="footer-social" href="https://x.com/aryanjohnsharma" target="_blank" rel="noreferrer noopener" aria-label="Follow Aryan on X"><span className="footer-social-mark" aria-hidden="true"><XTwitterIcon /></span></a>
           <a className="footer-social" href="https://www.instagram.com/aryanjohnsharma/" target="_blank" rel="noreferrer noopener" aria-label="Follow Aryan on Instagram"><span className="footer-social-mark" aria-hidden="true"><SquareInstagramIcon /></span></a>
