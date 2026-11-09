@@ -430,7 +430,7 @@ function App({ onReady }: { onReady?: () => void }) {
       <div className={`app-shell${phase === 'review' ? ' has-floating-export' : ''}`} data-theme={theme}>
       <header className="topbar">
         <a href="#home" className="brand" aria-label="SRT Sidecar home" onClick={(event) => { event.preventDefault(); transitionPhase('upload'); setWords([]); setFile(null) }}>
-          <span className="brand-mark"><AudioLines size={19} strokeWidth={2.2} /></span>
+          <img className="brand-logo" src="/brand-logo.png" alt="" />
           <span className="brand-name">srt<span>sidecar</span></span>
         </a>
         <div className="topbar-actions">
