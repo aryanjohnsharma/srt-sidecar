@@ -11,6 +11,11 @@ html[data-theme-transitioning]::view-transition-new(root){animation:theme-color-
 .theme-switching body,.theme-switching .app-shell,.theme-switching .topbar,.theme-switching .workspace,.theme-switching .recent-projects,.theme-switching .settings-panel,.theme-switching .transcript-card,.theme-switching .cue-list,.theme-switching .timing-editor,.theme-switching .audio-card,.theme-switching .benefit-marquee{transition:background-color 600ms ease-in-out,color 600ms ease-in-out,border-color 600ms ease-in-out}
 .app-shell{position:relative;z-index:1;isolation:isolate}
 .app-shell.has-floating-export{padding-bottom:100px}
+.app-shell{--site-header-height:72px;--site-footer-height:54px}
+.topbar{z-index:30}
+.site-footer{z-index:3}
+.page-edge-blur{pointer-events:none}
+@media(max-width:620px){.app-shell{--site-header-height:62px;--site-footer-height:54px}}
 @media(min-width:1024px){.app-shell{width:90.9091%;min-height:90.9091vh;margin-inline:auto;zoom:1.1}}
 @media(min-width:1024px){.app-shell>.topbar{width:110%;margin-left:-4.54545vw;margin-right:0}}
 .ambient-layer{position:fixed;inset:0;z-index:0;overflow:hidden;pointer-events:none;opacity:.23;transition:filter 780ms ease-in-out,opacity 780ms ease-in-out}
