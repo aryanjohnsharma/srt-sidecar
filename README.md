@@ -41,4 +41,6 @@ A local browser check transcribed a 16.7-second MP3 into 68 timed words and expo
 
 See [third-party notices](THIRD_PARTY_NOTICES.md) for component, icon, model, and dependency credits. The project uses React Bits Dither, ReactDrops Liquid Glass Logo, and Pikaicons. Review the included ReactDrops component license and the model repository license before redistributing the source or choosing a project-wide license.
 
-[![GitHub stars](https://img.shields.io/github/stars/aryanjohnsharma/srt-sidecar?style=social)](https://github.com/aryanjohnsharma/srt-sidecar/stargazers)
+<p align="center">
+  <a href="https://github.com/aryanjohnsharma/srt-sidecar/stargazers"><img alt="GitHub stars" src="https://img.shields.io/github/stars/aryanjohnsharma/srt-sidecar?style=flat&label=Stars&logo=github&logoColor=24292f&labelColor=f2f2f7&color=343a40" /></a>
+</p>
