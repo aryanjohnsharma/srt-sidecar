@@ -1,3 +1,5 @@
+![SRT Sidecar — word-timed subtitles for your edit](docs/assets/readme-header.png)
+
 # SRT Sidecar
 
 **Turn audio into editable, word-timed subtitles. Keep the workflow local.**
@@ -38,3 +40,5 @@ A local browser check transcribed a 16.7-second MP3 into 68 timed words and expo
 ## Credits and licensing
 
 See [third-party notices](THIRD_PARTY_NOTICES.md) for component, icon, model, and dependency credits. The project uses React Bits Dither, ReactDrops Liquid Glass Logo, and Pikaicons. Review the included ReactDrops component license and the model repository license before redistributing the source or choosing a project-wide license.
+
+[![GitHub stars](https://img.shields.io/github/stars/aryanjohnsharma/srt-sidecar?style=social)](https://github.com/aryanjohnsharma/srt-sidecar/stargazers)
